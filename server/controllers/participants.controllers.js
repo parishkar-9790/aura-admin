@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const getAllTeams = async (req, res) => {
     try {
-        const teams = await mongoose.connection.db.collection("teams").find();
-        res.status(200).json(teams);
+        // const teams = await mongoose.connection.db.collection("teams").find();
+        // res.status(200).json(teams);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
