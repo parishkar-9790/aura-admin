@@ -19,7 +19,7 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import {PostCreate, PostEdit, PostList, PostShow} from "./pages";
+import {PostList} from "./pages";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -96,9 +96,7 @@ function App() {
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
         <RefineSnackbarProvider>
           <Refine
-            dataProvider={dataProvider("http://localhost:4000/")}
-            // dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-
+            dataProvider={dataProvider("")}
             notificationProvider={notificationProvider}
             ReadyPage={ReadyPage}
             catchAll={<ErrorComponent />}
