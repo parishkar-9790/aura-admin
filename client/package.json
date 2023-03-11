@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@mui/icons-material": "^5.8.3",
+    "@pankod/refine-antd": "^4.7.3",
     "@pankod/refine-cli": "^1.2.0",
     "@pankod/refine-core": "^3.101.0",
     "@pankod/refine-inferencer": "^2.0.2",

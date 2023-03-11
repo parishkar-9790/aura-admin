@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Refine, GitHubBanner, AuthProvider } from "@pankod/refine-core";
 import {
   notificationProvider,
@@ -20,7 +19,8 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { Participant } from "pages/participant"
+import {PostCreate, PostEdit, PostList, PostShow} from "./pages";
+// import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
   const token = localStorage.getItem("token");
@@ -101,13 +101,11 @@ function App() {
             catchAll={<ErrorComponent />}
             resources={[
               {
-                name: "Participant",
-                list: Participant,
-                // show:
-                // edit: MuiInferencer,
-                // show: MuiInferencer,
-                // create: MuiInferencer,
-                // canDelete: true,
+                name: "posts",
+                list:PostList,
+                create:PostCreate,
+                show:PostShow,
+                edit:PostEdit
               },
               {
                 name: "Transaction ID's",
