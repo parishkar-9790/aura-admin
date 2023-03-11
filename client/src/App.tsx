@@ -87,6 +87,7 @@ function App() {
     },
   };
 
+
   return (
     <>
       {/*<GitHubBanner />*/}
@@ -95,23 +96,19 @@ function App() {
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
         <RefineSnackbarProvider>
           <Refine
-            dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+            dataProvider={dataProvider("https://aura.git.edu/teams/event/6406b733cb5e5780efd997fd")}
+            // dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
             notificationProvider={notificationProvider}
             ReadyPage={ReadyPage}
             catchAll={<ErrorComponent />}
             resources={[
               {
-                name: "posts",
+                name: "Teams",
                 list:PostList,
-                create:PostCreate,
-                show:PostShow,
-                edit:PostEdit
-              },
-              {
-                name: "Transaction ID's",
-                list: MuiInferencer,
-
-              },
+                // create:PostCreate,
+                // show:PostShow,Teams
+                // edit:PostEdit
+              }
             ]}
             Title={Title}
             Sider={Sider}

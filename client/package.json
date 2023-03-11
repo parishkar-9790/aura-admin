@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/compatible": "^5.1.1",
+    "@ant-design/pro-card": "^2.3.0",
     "@mui/icons-material": "^5.8.3",
     "@pankod/refine-antd": "^4.7.3",
     "@pankod/refine-cli": "^1.2.0",
