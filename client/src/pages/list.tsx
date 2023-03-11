@@ -8,6 +8,7 @@ interface Event {
         event_id: string;
         event_title: string;
     };
+
     team_leader: {
         id: string;
         aura_id: string;
