@@ -8,7 +8,7 @@ export const Participant = () => {
 
     React.useEffect(() => {
         const fetchParticipants = async () => {
-            const response = await axios.get("https://aura.git.edu/teams/event");
+            const response = await axios.get("https://aura.git.edu/teams/event/%%id%%");
             setParticipants(response.data.data);
         };
 

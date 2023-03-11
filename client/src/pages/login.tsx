@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useLogin } from "@pankod/refine-core";
 import { Container, Box } from "@pankod/refine-mui";
-// import  { yariga } from "../assets"
+import  { yariga } from "../assets"
+// import {refine} from "../../public/refine.svg"
 import { CredentialResponse } from "../interfaces/google";
 // import dotenv from 'dotenv'
 // require('dotenv').config()
@@ -71,6 +72,7 @@ export const Login: React.FC = () => {
           </div>
           <Box mt={4}>
             <GoogleButton />
+
           </Box>
         </Box>
       </Container>

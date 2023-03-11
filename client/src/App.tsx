@@ -89,7 +89,7 @@ function App() {
 
   return (
     <>
-      <GitHubBanner />
+      {/*<GitHubBanner />*/}
       <ThemeProvider theme={LightTheme}>
         <CssBaseline />
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />

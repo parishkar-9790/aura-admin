@@ -181,7 +181,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                     backgroundColor: isSelected?"#001233":"transparent",
 
                   },
-                    backgroundColor: isSelected?"475be8":"transparent",
+                    backgroundColor: isSelected?"#475be8":"transparent",
                 },
                 justifyContent: "center",
                   margin:'10px auto',
@@ -287,7 +287,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           sx={{
             justifyContent: "center",
             minWidth: 36,
-            color: "primary.contrastText",
+            color: "#808191",
           }}
         >
           <Logout />
@@ -296,7 +296,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           primary={t("buttons.logout", "Logout")}
           primaryTypographyProps={{
             noWrap: true,
-            fontSize: "14px",
+            fontSize: "16px",
           }}
         />
       </ListItemButton>
@@ -324,7 +324,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
   };
 
   const drawer = (
-    <MuiList disablePadding sx={{ mt: 1, color: "primary.contrastText" }}>
+    <MuiList disablePadding sx={{ mt: 1, color: "#808191" }}>
       {renderSider()}
     </MuiList>
   );
@@ -360,8 +360,10 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           sx={{
             display: { sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
-              width: 256,
-              bgcolor: "secondary.main",
+              width: drawerWidth,
+              bgcolor: "#FCFCFC",
+                overflow:"hidden",
+                transition: "width 200ms cubic-bezier (0.4,0,.6,1) 0ms"
             },
           }}
         >
@@ -413,7 +415,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           <Button
             sx={{
               background: "rgba(0,0,0,.5)",
-              color: "primary.contrastText",
+              color: "#001233",
               textAlign: "center",
               borderRadius: 0,
               borderTop: "1px solid #ffffff1a",
