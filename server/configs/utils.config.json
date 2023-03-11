@@ -1,0 +1,31 @@
+{
+  "jwt": {
+    "ages": {
+      "login": 259200
+    }
+  },
+  "bcrypt": {
+    "salt.rounds": 10
+  },
+  "razorpay": {
+    "currency": "INR",
+    "available.schemes": {
+      "solo_event_registration": "solo_event_registration",
+      "team_event_registration": "team_event_registration"
+    },
+    "schemes": {
+      "solo_event_registration": {
+        "amount": 5000
+      },
+      "team_event_registration": {
+        "amount": 25000
+      }
+    }
+  },
+  "aura.id": {
+    "prefix": "AURA23",
+    "delimiter": "-",
+    "name.length": 3,
+    "suffix.digits.length": 5
+  }
+}

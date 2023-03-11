@@ -1,0 +1,13 @@
+{
+  "search.options": {
+    "email": "^{email}",
+    "college": "{college}",
+    "name": "^{name}",
+    "usn": "^{usn}",
+    "phone": "^{phone}"
+  },
+  "search.pagination": {
+    "page.size": 20,
+    "page.max.size": 20
+  }
+}

@@ -96,8 +96,9 @@ function App() {
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
         <RefineSnackbarProvider>
           <Refine
-            dataProvider={dataProvider("https://aura.git.edu/teams/event/6406b733cb5e5780efd997fd")}
+            dataProvider={dataProvider("http://localhost:4000/")}
             // dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+
             notificationProvider={notificationProvider}
             ReadyPage={ReadyPage}
             catchAll={<ErrorComponent />}

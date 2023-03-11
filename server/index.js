@@ -1,27 +1,34 @@
-import express from 'express'
-import * as dotenv from 'dotenv'
-import cors from 'cors'
-import teamRouter from './routes/participants.routes.js'
-import connectDB from './mongodb/connect.js'
-dotenv.config()
+// Start log
+const { logInfo } = require("./utils/winston.util");
+logInfo("[START]");
 
-// middlewares
-const app=express()
-app.use(cors())
-app.use(express.json())
-app.use('/api/teams',teamRouter)
-// highly responsive dashboard
-app.get('/',(req,res)=>{
-    res.send({message:'hey there'})
-})
-// init backend
-const startServer=async ()=>{
-    try{
-        connectDB(process.env.MONGO)
-        app.listen(8080,()=>console.log("Server up and running @8080"))
-    }catch(error){
-        console.log(error)
-    }
+// Load and cache all Environment variables
+require("dotenv").config();
 
-}
-startServer()
+// Connect to MongoDB
+require("./scripts/mongodb.script");
+
+// Start Express server
+const { expressApp } = require("./utils/express.util");
+
+// Middlewares and Routes
+const { checkUser } = require("./middleware/authMiddleware");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const ticketRoutes = require("./routes/ticketRoutes");
+const teamRoutes = require("./routes/teamRoutes");
+const receiptRoutes = require("./routes/receiptRoutes");
+const submissionRoutes = require("./routes/submissionRoutes");
+const newsRoutes = require("./routes/newsRoutes");
+
+// Route Middlewares
+expressApp.get("*", checkUser);
+expressApp.use("/auth/user", authRoutes);
+expressApp.use("/users", userRoutes);
+expressApp.use("/events", eventRoutes);
+expressApp.use("/teams", teamRoutes);
+expressApp.use("/tickets", ticketRoutes);
+expressApp.use("/receipts", receiptRoutes);
+expressApp.use("/submissions", submissionRoutes);
+expressApp.use("/news", newsRoutes);
