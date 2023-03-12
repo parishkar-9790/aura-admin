@@ -5,7 +5,7 @@ const User = require("../models/User");
 const errors = require("../configs/error.codes.json");
 const queryConfig = require("../configs/query.config.json");
 const Response = require("../models/standard.response.model");
-// const Receipt = require("../models/Receipt");
+const Receipt = require("../models/Receipt");
 const Event = require("../models/Event");
 const { errorHandler } = require("../utils/utils");
 
@@ -52,7 +52,7 @@ module.exports.createTeam = async (req, res, next) => {
 			return res.status(403).send(Response(errors[403].invalidOperation));
 
 		team_members = await Promise.all(team_members.map(aura_id => User.findOne({ aura_id })));
-		if (team_members.length > 0 && team_members.filter(member => member).length !== team_members.length)
+		if (team_members.length > 0 && team_members.length !== team_members.filter(member => !!member).length)
 			return res.status(404).send(Response(errors[404].userNotFound));
 
 		// Validate with min. team size
@@ -100,20 +100,14 @@ module.exports.createTeam = async (req, res, next) => {
 				return res.status(403).send(Response(errors[403].teamMemberAlreadyRegistered));
 		}
 
-		const id = new mongoose.Types.ObjectId().toHexString();
 		let limit = parseInt(event.registration_limit);
 		const query = { _id: event._id };
 
 		if (!isNaN(limit))
 			query[`registered_teams.${limit - 1}`] = { $exists: false };
 
-		const results2 = await Event.updateOne(query, { $push: { registered_teams: { team_id: id, leader_id: res.locals.user._id } } });
-		if (results2.modifiedCount === 0)
-			return res.status(403).send(Response(errors[403].registrationsClosed));
-
 		// Register team
 		const newTeam = await Team.create({
-			_id: id,
 			event_participated,
 			team_name,
 			team_leader: {
@@ -131,6 +125,12 @@ module.exports.createTeam = async (req, res, next) => {
 				usn: member.usn,
 			})),
 		});
+
+		const results2 = await Event.updateOne(query, { $push: { registered_teams: { team_id: newTeam._id, leader_id: res.locals.user._id } } });
+		if (results2.modifiedCount === 0) {
+			await Team.deleteOne({ _id: newTeam._id });
+			return res.status(403).send(Response(errors[403].registrationsClosed));
+		}
 
 		if (!res.locals.data)
 			res.locals.data = {};
@@ -305,6 +305,10 @@ module.exports.modifyTeam = async (req, res, next) => {
 		if (String(team.team_leader.id) !== String(res.locals.user._id))
 			return res.status(403).send(Response(errors[403].invalidOperation));
 
+		// Check if the payment is done, if yes team cannot be updated
+		if (await Receipt.findOne({ team: id }))
+			return res.status(403).send(Response(errors[403].teamLocked));
+
 		const event = await Event.findById(team.event_participated.event_id);
 		if (!event)
 			return res.status(404).send(Response(errors[404].eventNotFound));
@@ -321,7 +325,7 @@ module.exports.modifyTeam = async (req, res, next) => {
 				return res.status(403).send(Response(errors[403].invalidOperation));
 
 			team_members = await Promise.all(team_members.map(aura_id => User.findOne({ aura_id })));
-			if (team_members.length > 0 && team_members.find(member => !member))
+			if (team_members.length > 0 && team_members.length !== team_members.filter(member => !!member).length)
 				return res.status(404).send(Response(errors[404].userNotFound));
 
 			// Validate with min. team size
