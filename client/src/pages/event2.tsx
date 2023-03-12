@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
+import { TeamDetails } from './team_details';
 
 type Event = {
     _slugs: {
@@ -44,6 +45,7 @@ export const PostEvents2: React.FC = () => {
         eventId: string | null,
         eventName: string | null,
     }>({ eventId: null, eventName: null });
+    const [teamSelected, setTeamSelected] = useState<string | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
 
     useEffect(() => {
@@ -51,6 +53,14 @@ export const PostEvents2: React.FC = () => {
             .then((response) => response.json())
             .then((data: ApiData) => setEvents(data.data.events));
     }, []);
+
+    if (teamSelected)
+        return <div>
+            <h1>Displaying Team</h1>
+            <Button color='primary' onClick={() => setTeamSelected(null)}>Go back</Button>
+            <br />
+            <TeamDetails team_id={teamSelected} />
+        </div>;
 
     if (!eventSelected.eventId) {
         return (
@@ -75,7 +85,8 @@ export const PostEvents2: React.FC = () => {
     return <div>
         <h1>Displaying Teams under "{eventSelected.eventName}"</h1>
         <Button color='primary' onClick={() => setEventSelected({ eventId: null, eventName: null })}>Go back</Button>
-        <PostTeams eventId={eventSelected.eventId!} />
+        <br />
+        <PostTeams eventId={eventSelected.eventId!} onClick={(_id: string) => setTeamSelected(_id)} />
     </div>;
 };
 

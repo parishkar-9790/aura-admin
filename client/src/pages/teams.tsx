@@ -4,7 +4,7 @@ import {
     List,
     Table,
 } from "@pankod/refine-antd";
-import { RefreshButton } from '@pankod/refine-mui';
+import { Button, RefreshButton } from '@pankod/refine-mui';
 
 interface TeamMember {
     id: string;
@@ -48,6 +48,7 @@ interface ApiResponse {
 
 interface Props {
     eventId: string;
+    onClick: Function;
 }
 
 interface IResults {
@@ -76,7 +77,7 @@ interface IResults {
 let paginationTs: any = Date.now();
 let hasMoreResults = true;
 
-export const PostTeams: React.FC<Props> = ({ eventId }) => {
+export const PostTeams: React.FC<Props> = ({ eventId, onClick }) => {
     const [teams, setTeams] = useState<Array<IResults>>([]);
 
     async function loadTeams(clear: boolean = false) {
@@ -121,7 +122,7 @@ export const PostTeams: React.FC<Props> = ({ eventId }) => {
                     <Table.Column
                         dataIndex="team_name"
                         title="Team Name"
-                        render={(name) => <span>{name}</span>}
+                        render={(name, _, index) => <Button onClick={() => onClick(teams[index]._id)}><span>{name}</span></Button>}
                     />
                     <Table.Column
                         dataIndex="team_leader"

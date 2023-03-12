@@ -5,8 +5,8 @@ import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import Crd from '../crd.json'
 
-import {Table, TableBody, TableContainer, TableHead, TableRow } from '@pankod/refine-mui';
-import {Paper, TableCell} from "@material-ui/core";
+import { Table, TableBody, TableContainer, TableHead, TableRow } from '@pankod/refine-mui';
+import { Paper, TableCell } from "@material-ui/core";
 
 type Event = {
     _slugs: {
@@ -101,7 +101,7 @@ export const PostEvents: React.FC = () => {
                     </Button>
                 </Box>
             ))}
-            {buttonClicked && clickedEventId && <PostTeams eventId={clickedEventId} />}
+            {buttonClicked && clickedEventId && <PostTeams eventId={clickedEventId} onClick={() => { }} />}
         </Box>
     );
 
