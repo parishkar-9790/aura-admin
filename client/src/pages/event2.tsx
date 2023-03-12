@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
+import assert from 'assert';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
-const test: User[] = require('../crd.json');
+import { sluggify } from "../utils/utils";
+
+import crds from "../crd.json";
+
+import { CircularProgress } from '@pankod/refine-mui';
+
 type Event = {
     _slugs: {
         title: string;
@@ -39,11 +45,13 @@ type ApiData = {
     error: boolean;
     data: Data;
 };
+
 interface IUser {
     name: string;
     email: string;
     avatar: string;
 }
+
 interface User {
     timestamp: string;
     email: string;
@@ -52,38 +60,78 @@ interface User {
     usn: string;
     club: string;
 }
+
+function getClub(coordinators: any, usn: string) {
+    if (!Object.keys(coordinators).includes(usn)) {
+        console.error("Not allowed!");
+        return;
+    }
+
+    const user: User = coordinators[usn]!;
+    if (user.club === "*")
+        return "*"
+
+    return sluggify(user.club);
+}
+
+function groupBy(list: Array<any>, field: string) {
+    const grouped: any = {};
+
+    for (const item of list) {
+        if (!(item[field] in grouped))
+            grouped[item[field]] = [];
+        grouped[item[field]].push(item);
+    }
+
+    return grouped;
+}
+
+
 export const PostEvents2: React.FC = () => {
+    const coordinators: any = crds;
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [eventSelected, setEventSelected] = useState<{
         eventId: string | null,
         eventName: string | null,
     }>({ eventId: null, eventName: null });
     const [teamSelected, setTeamSelected] = useState<string | null>(null);
-    const [events, setEvents] = useState<Event[]>([]);
+    const [events, setEvents] = useState<any>({});
     const [user, setUser] = useState<IUser | null>(null);
 
-    const email = user?.email;
-    const usn = (email?.split("@")[0]?.toUpperCase() ?? "");
-    // console.log(usn)
-    function sluggify(str: string | undefined) {
-        return str?.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/\s+/, " ").split(" ").join("-");
-    }
     useEffect(() => {
         const userJson = localStorage.getItem('user');
         if (userJson) {
             const userObj: IUser = JSON.parse(userJson);
-            setUser(userObj);
+            const usn = (userObj.email?.split("@")[0]?.toLowerCase().trim() ?? "");
+            const clubSlug = getClub(coordinators, usn);
+
+            if (clubSlug === "*") {
+                // Load all events
+                fetch(`http://localhost:4000/events/list`)
+                    .then((response) => response.json())
+                    .then((data: ApiData) => {
+                        setUser(userObj);
+                        setEvents(groupBy(data.data.events.sort((l, r) => l.club.localeCompare(r.club)), "club"));
+                        setIsLoading(false);
+                    });
+            } else {
+                // Load events
+                fetch(`http://localhost:4000/events/${clubSlug}`)
+                    .then((response) => response.json())
+                    .then((data: ApiData) => {
+                        setUser(userObj);
+                        setEvents(groupBy(data.data.events.sort((l, r) => l.club.localeCompare(r.club)), "club"));
+                        setIsLoading(false);
+                    });
+            }
+        } else {
+            console.error("There is no user in localStorage!");
         }
     }, []);
-    function getClub(usn: string) {
-        const user = test.find((user) => user.usn === usn);
-        console.log(sluggify(user?.club))
-        return user ? sluggify(user.club) : '';
-    }
-    useEffect(() => {
-        fetch(`http://localhost:4000/events/${(getClub(usn))}}`)
-            .then((response) => response.json())
-            .then((data: ApiData) => setEvents(data.data.events));
-    }, []);
+
+    if (isLoading)
+        return <CircularProgress />
 
     if (teamSelected)
         return <div>
@@ -98,16 +146,21 @@ export const PostEvents2: React.FC = () => {
             <div>
                 <h1>Select an Event</h1>
                 <Box display="flex" flexDirection="column" alignItems="center">
-                    {events.map((event) => (
-                        <div>
-                            <Box key={event._id} m={2}>
-                                <Button variant="contained" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
-                                    {event.title}
-                                </Button>
+                    {Object.keys(events).map((club: string) => {
+                        return <div>
+                            <Box key={club} m={2}>
+                                <h2 style={{ color: "#5555bb" }}>{club}</h2>
                             </Box>
-                            <br />
-                        </div>
-                    ))}
+                            {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
+                                <div>
+                                    <Button style={{ marginBottom: "10px" }} variant="outlined" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
+                                        {event.title}
+                                    </Button>
+                                    <br />
+                                </div>
+                            )}
+                        </div>;
+                    })}
                 </Box>
             </div>
         );
