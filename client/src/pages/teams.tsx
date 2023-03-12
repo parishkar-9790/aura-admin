@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+import {
+    List,
+    Table,
+} from "@pankod/refine-antd";
+import { RefreshButton } from '@pankod/refine-mui';
+
 interface TeamMember {
     id: string;
     aura_id: string;
@@ -44,47 +50,108 @@ interface Props {
     eventId: string;
 }
 
+interface IResults {
+    event_participated: {
+        event_id: string;
+        event_title: string;
+    };
+    team_leader: {
+        id: string;
+        aura_id: string;
+        usn: string;
+        name: string;
+        email: string;
+    };
+    _id: string;
+    team_name: string;
+    team_members: Array<{
+        usn: string;
+        name: string;
+    }>;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+};
+
+let paginationTs: any = Date.now();
+let hasMoreResults = true;
+
 export const PostTeams: React.FC<Props> = ({ eventId }) => {
-    const [teams, setTeams] = useState<Team[]>([]);
+    const [teams, setTeams] = useState<Array<IResults>>([]);
+
+    async function loadTeams(clear: boolean = false) {
+        if (!hasMoreResults)
+            return;
+
+        try {
+            const response = await fetch(`http://localhost:4000/teams/event/${eventId}${paginationTs ? `?paginationTs=${paginationTs}` : ""}`);
+            const json = await response.json();
+
+            // Update paginationTs
+            paginationTs = json.data.paginationTs;
+            hasMoreResults = paginationTs !== null;
+
+            if (!clear)
+                setTeams([...teams, ...json.data.results]);
+            else
+                setTeams(json.data.results);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
     useEffect(() => {
-        fetch(`http://localhost:4000/teams/event/${eventId}`)
-            .then((response) => response.json())
-            .then((data: ApiResponse) => {
-                setTeams(data.data.results);
-            });
+        console.log("Loading teams");
+
+        paginationTs = Date.now();
+        hasMoreResults = true;
+
+        loadTeams(true);
     }, [eventId]);
 
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Team Name</th>
-                <th>Team Leader</th>
-                <th>Leader's USN</th>
-                <th>Team Members</th>
-                <th>Member's USN</th>
-            </tr>
-            </thead>
-            <tbody>
-            {teams.map((team) => (
-                <tr key={team._id}>
-                    <td>{team.team_name}</td>
-                    <td>{team.team_leader.name}</td>
-                    <td>{team.team_leader.usn}</td>
-                    <td>
-                        {team.team_members.map((member) => (
-                            <div key={member._id}>{member.name}</div>
-                        ))}
-                    </td>
-                    <td>
-                        {team.team_members.map((member) => (
-                            <div key={member._id}>{member.usn}</div>
-                        ))}
-                    </td>
-                </tr>
-            ))}
-            </tbody>
-        </table>
+        <div>
+            <List>
+                <Table dataSource={teams} pagination={false}>
+                    <Table.Column
+                        dataIndex="_id"
+                        title="Team #"
+                        render={(id, _, index) => <span>{index + 1}</span>}
+                    />
+                    <Table.Column
+                        dataIndex="team_name"
+                        title="Team Name"
+                        render={(name) => <span>{name}</span>}
+                    />
+                    <Table.Column
+                        dataIndex="team_leader"
+                        title="Team Leader Name"
+                        render={(team_leader) => <span>{team_leader.name}</span>}
+                    />
+                    <Table.Column
+                        dataIndex="team_leader"
+                        title="Team Leader Aura ID"
+                        render={(team_leader) => <span>{team_leader.aura_id}</span>}
+                    />
+                    <Table.Column
+                        dataIndex="team_members"
+                        title="Team Members"
+                        render={(members: Array<any>) =>
+                            members.length === 0 ? <span>None</span> :
+                                <ul>
+                                    {members.map(member => <li>{member.name}</li>)}
+                                </ul>
+                        }
+                    />
+                </Table>
+            </List>
+
+            <br />
+            <RefreshButton fullWidth={true} onClick={() => {
+                loadTeams();
+            }} disabled={!hasMoreResults}>
+                {hasMoreResults ? "Load next 20 results" : "No more results!"}
+            </RefreshButton>
+        </div>
     );
 };

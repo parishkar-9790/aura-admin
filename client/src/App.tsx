@@ -19,7 +19,7 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import {PostEvents, PostList} from "./pages";
+import { PostEvents2, PostList } from "./pages";
 import * as events from "events";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
@@ -104,11 +104,11 @@ function App() {
             resources={[
               {
                 name: "Teams",
-                list:PostList,
+                list: PostList,
               },
               {
-                name:"Events",
-                list:PostEvents,
+                name: "Events",
+                list: PostEvents2,
               }
             ]}
             Title={Title}
