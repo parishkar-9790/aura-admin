@@ -74,7 +74,8 @@ let hasMoreResults = true;
 export const PostList = () => {
     const [data, setData] = useState<Array<IResults>>([]);
     const [user, setUser] = useState<IUser | null>(null);
-
+    const email = user?.email;
+    const username = email?.split("@")[0];
     async function loadTeams() {
         if (!hasMoreResults)
             return;
@@ -113,6 +114,7 @@ export const PostList = () => {
         <div>
             {user && (
                 <div>
+                    <h1>{username}</h1>
                     <h2>User Profile</h2>
                     <p>Name: {user.name}</p>
                     <p>Email: {user.email}</p>

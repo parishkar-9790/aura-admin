@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
-
+const test: User[] = require('../crd.json');
 type Event = {
     _slugs: {
         title: string;
@@ -39,7 +39,19 @@ type ApiData = {
     error: boolean;
     data: Data;
 };
-
+interface IUser {
+    name: string;
+    email: string;
+    avatar: string;
+}
+interface User {
+    timestamp: string;
+    email: string;
+    name: string;
+    email2: string;
+    usn: string;
+    club: string;
+}
 export const PostEvents2: React.FC = () => {
     const [eventSelected, setEventSelected] = useState<{
         eventId: string | null,
@@ -47,9 +59,28 @@ export const PostEvents2: React.FC = () => {
     }>({ eventId: null, eventName: null });
     const [teamSelected, setTeamSelected] = useState<string | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
+    const [user, setUser] = useState<IUser | null>(null);
 
+    const email = user?.email;
+    const usn = (email?.split("@")[0]?.toUpperCase() ?? "");
+    // console.log(usn)
+    function sluggify(str: string | undefined) {
+        return str?.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/\s+/, " ").split(" ").join("-");
+    }
     useEffect(() => {
-        fetch('http://localhost:4000/events/literary-club')
+        const userJson = localStorage.getItem('user');
+        if (userJson) {
+            const userObj: IUser = JSON.parse(userJson);
+            setUser(userObj);
+        }
+    }, []);
+    function getClub(usn: string) {
+        const user = test.find((user) => user.usn === usn);
+        console.log(sluggify(user?.club))
+        return user ? sluggify(user.club) : '';
+    }
+    useEffect(() => {
+        fetch(`http://localhost:4000/events/${(getClub(usn))}}`)
             .then((response) => response.json())
             .then((data: ApiData) => setEvents(data.data.events));
     }, []);
