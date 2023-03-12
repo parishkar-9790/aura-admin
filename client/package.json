@@ -9,7 +9,7 @@
     "@mui/icons-material": "^5.8.3",
     "@pankod/refine-antd": "^4.7.3",
     "@pankod/refine-cli": "^1.2.0",
-    "@pankod/refine-core": "^3.101.0",
+    "@pankod/refine-core": "^3.101.2",
     "@pankod/refine-inferencer": "^2.0.2",
     "@pankod/refine-mui": "^3.30.0",
     "@pankod/refine-react-hook-form": "^3.27.1",
@@ -37,6 +37,7 @@
   },
   "scripts": {
     "dev": "refine start",
+    "start": "refine start",
     "build": "refine build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
