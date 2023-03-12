@@ -138,39 +138,38 @@ export const PostEvents2: React.FC = () => {
             <h1>Displaying Team</h1>
             <Button color='primary' onClick={() => setTeamSelected(null)}>Go back</Button>
             <br />
-            <TeamDetails team_id={teamSelected} />
+            <TeamDetails key="teamDetails" team_id={teamSelected} />
         </div>;
 
-    if (!eventSelected.eventId) {
-        return (
-            <div>
-                <h1>Select an Event</h1>
-                <Box display="flex" flexDirection="column" alignItems="center">
-                    {Object.keys(events).map((club: string) => {
-                        return <div>
-                            <Box key={club} m={2}>
-                                <h2 style={{ color: "#5555bb" }}>{club}</h2>
-                            </Box>
-                            {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
-                                <div>
-                                    <Button style={{ marginBottom: "10px" }} variant="outlined" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
-                                        {event.title}
-                                    </Button>
-                                    <br />
-                                </div>
-                            )}
-                        </div>;
-                    })}
-                </Box>
-            </div>
-        );
-    }
+    if (eventSelected.eventId)
+        return <div>
+            <h1>Displaying Teams under "{eventSelected.eventName}"</h1>
+            <Button color='primary' onClick={() => setEventSelected({ eventId: null, eventName: null })}>Go back</Button>
+            <br />
+            <PostTeams key="postTeams" eventId={eventSelected.eventId!} onClick={(_id: string) => setTeamSelected(_id)} />
+        </div>;
 
-    return <div>
-        <h1>Displaying Teams under "{eventSelected.eventName}"</h1>
-        <Button color='primary' onClick={() => setEventSelected({ eventId: null, eventName: null })}>Go back</Button>
-        <br />
-        <PostTeams eventId={eventSelected.eventId!} onClick={(_id: string) => setTeamSelected(_id)} />
-    </div>;
+    return (
+        <div>
+            <h1>Select an Event</h1>
+            <Box display="flex" flexDirection="column" alignItems="center">
+                {Object.keys(events).map((club: string) => {
+                    return <div>
+                        <Box key={club} m={2}>
+                            <h2 style={{ color: "#5555bb" }}>{club}</h2>
+                        </Box>
+                        {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
+                            <div>
+                                <Button style={{ marginBottom: "10px" }} variant="outlined" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
+                                    {event.title}
+                                </Button>
+                                <br />
+                            </div>
+                        )}
+                    </div>;
+                })}
+            </Box>
+        </div>
+    );
 };
 

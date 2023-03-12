@@ -38,8 +38,11 @@ export interface ITeam {
 	_id: string;
 	team_name: string;
 	team_members: Array<{
+		id: string;
+		aura_id: string;
 		usn: string;
 		name: string;
+		email: string;
 	}>;
 	createdAt: string;
 	updatedAt: string;
