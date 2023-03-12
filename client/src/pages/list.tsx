@@ -123,7 +123,7 @@ export const PostList = () => {
                 </div>
             )}
 
-            <List>
+            {/* <List>
                 <Table dataSource={data} pagination={false}>
                     <Table.Column
                         dataIndex="_id"
@@ -163,7 +163,7 @@ export const PostList = () => {
                 loadTeams();
             }} disabled={!hasMoreResults}>
                 {hasMoreResults ? "Load next 20 results" : "No more results!"}
-            </RefreshButton>
+            </RefreshButton> */}
         </div>
     );
 };
