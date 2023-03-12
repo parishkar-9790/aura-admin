@@ -7,11 +7,11 @@ import {
 	School,
 } from "@mui/icons-material";
 
-import { Typography, Show, Breadcrumb } from "@pankod/refine-antd";
-import { Card, Link } from "@pankod/refine-mui";
+import { Typography } from "@pankod/refine-antd";
+import { Link } from "@pankod/refine-mui";
 import { IUser } from "../interfaces/all";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 interface Props {
 	user: IUser;

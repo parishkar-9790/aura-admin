@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import assert from 'assert';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
-import { sluggify } from "../utils/utils";
+import { sluggify, getAllEvents, getEventsByClub } from "../utils/utils";
 import crds from "../crd.json";
 
 import { CircularProgress, Show } from '@pankod/refine-mui';
@@ -36,16 +35,6 @@ type Event = {
     link: boolean;
     registered_teams: any[];
     min_team_size: number;
-};
-
-type Data = {
-    events: Event[];
-};
-
-type ApiData = {
-    success: boolean;
-    error: boolean;
-    data: Data;
 };
 
 interface IUser {
@@ -88,7 +77,6 @@ function groupBy(list: Array<any>, field: string) {
     return grouped;
 }
 
-
 export const PostEvents2: React.FC = () => {
     const coordinators: any = crds;
 
@@ -110,20 +98,18 @@ export const PostEvents2: React.FC = () => {
 
             if (clubSlug === "*") {
                 // Load all events
-                fetch(`http://localhost:4000/events/list`)
-                    .then((response) => response.json())
-                    .then((data: ApiData) => {
+                getAllEvents()
+                    .then(events => {
                         setUser(userObj);
-                        setEvents(groupBy(data.data.events.sort((l, r) => l.club.localeCompare(r.club)), "club"));
+                        setEvents(groupBy(events!.sort((l, r) => l.club.localeCompare(r.club)), "club"));
                         setIsLoading(false);
                     });
-            } else {
+            } else if (clubSlug !== null) {
                 // Load events
-                fetch(`http://localhost:4000/events/${clubSlug}`)
-                    .then((response) => response.json())
-                    .then((data: ApiData) => {
+                getEventsByClub(clubSlug!)
+                    .then(events => {
                         setUser(userObj);
-                        setEvents(groupBy(data.data.events.sort((l, r) => l.club.localeCompare(r.club)), "club"));
+                        setEvents(groupBy(events!.sort((l, r) => l.club.localeCompare(r.club)), "club"));
                         setIsLoading(false);
                     });
             }
