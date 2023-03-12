@@ -19,7 +19,8 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import {PostList} from "./pages";
+import {PostEvents, PostList} from "./pages";
+import * as events from "events";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -104,9 +105,10 @@ function App() {
               {
                 name: "Teams",
                 list:PostList,
-                // create:PostCreate,
-                // show:PostShow,Teams
-                // edit:PostEdit
+              },
+              {
+                name:"Events",
+                list:PostEvents,
               }
             ]}
             Title={Title}

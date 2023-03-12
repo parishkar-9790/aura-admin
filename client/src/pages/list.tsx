@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import clubs from "../crd.json"
 interface IData {
     success: boolean;
     error: boolean;
