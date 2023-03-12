@@ -1,4 +1,4 @@
-import { ITeam, IUser, IEvent } from "../interfaces/all";
+import { ITeam, IUser, IEvent, IReceipt } from "../interfaces/all";
 
 export function sluggify(str: string | undefined) {
 	return str?.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/\s+/, " ").split(" ").join("-");
@@ -69,3 +69,25 @@ export async function getUser(user_id: string) {
 		return null;
 	}
 };
+
+export async function getReceiptByTeam(team_id: string) {
+	try {
+		const response = await fetch(`http://localhost:4000/receipts/team/${team_id}`);
+		if (response.status !== 200)
+			return null;
+
+		const json = await response.json();
+		if (!json.success) {
+			console.error("Error code:", json.error);
+			return null;
+		}
+
+		const data = json.data;
+		const receipt = data.receipt as IReceipt;
+
+		return receipt;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}

@@ -22,11 +22,13 @@
     "apexcharts": "^3.37.1",
     "axios": "^0.26.1",
     "dotenv": "^16.0.3",
+    "moment": "^2.29.4",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.0",
+    "reactjs-popup": "^2.0.5",
     "web-vitals": "^1.1.1"
   },
   "devDependencies": {

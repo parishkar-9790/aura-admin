@@ -6,10 +6,12 @@ import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
 import { sluggify } from "../utils/utils";
-
 import crds from "../crd.json";
 
-import { CircularProgress } from '@pankod/refine-mui';
+import { CircularProgress, Show } from '@pankod/refine-mui';
+import { Typography } from '@pankod/refine-antd';
+const { Title, Text } = Typography;
+
 
 type Event = {
     _slugs: {
@@ -155,6 +157,23 @@ export const PostEvents2: React.FC = () => {
             <Box display="flex" flexDirection="column" alignItems="center">
                 {Object.keys(events).map((club: string) => {
                     return <div>
+                        <Show title="" goBack={null} headerButtons={() => null}>
+                            <Title level={3}>{club}</Title>
+
+                            {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
+                                <div>
+                                    <Button style={{ marginBottom: "10px" }} variant="contained" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
+                                        {event.title}
+                                    </Button>
+                                    <br />
+                                </div>
+                            )}
+                        </Show>
+                        <br />
+                    </div>;
+                })}
+                {/* {Object.keys(events).map((club: string) => {
+                    return <div>
                         <Box key={club} m={2}>
                             <h2 style={{ color: "#5555bb" }}>{club}</h2>
                         </Box>
@@ -167,7 +186,7 @@ export const PostEvents2: React.FC = () => {
                             </div>
                         )}
                     </div>;
-                })}
+                })} */}
             </Box>
         </div>
     );

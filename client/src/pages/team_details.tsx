@@ -1,14 +1,16 @@
 // Icons
-import { Person, People } from '@mui/icons-material';
+import { Paid } from '@mui/icons-material';
 
-import { CircularProgress, Link } from "@pankod/refine-mui";
-import { useEffect, useState } from "react";
-import { IUser, ITeam, IEvent } from "../interfaces/all";
+import Moment from 'moment';
 
-import { getEvent, getTeam, getUser } from "../utils/utils";
-
-import { Show, Typography, MarkdownField } from "@pankod/refine-antd";
+import { IUser, ITeam, IEvent, IReceipt } from "../interfaces/all";
+import { getEvent, getReceiptByTeam, getTeam, getUser } from "../utils/utils";
 import { UserDetails } from './user_details';
+
+import { useEffect, useState } from "react";
+import { Show, Typography, MarkdownField, Breadcrumb } from "@pankod/refine-antd";
+import { Card, Tooltip } from '@material-ui/core';
+import Popup from 'reactjs-popup';
 const { Title, Text } = Typography;
 
 interface Props {
@@ -18,6 +20,7 @@ interface Props {
 export const TeamDetails: React.FC<Props> = ({ team_id }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
+	const [receipt, setReceipt] = useState<IReceipt | null>(null);
 	const [team, setTeam] = useState<ITeam | null>(null);
 	const [event, setEvent] = useState<IEvent | null>(null);
 	const [users, setUsers] = useState<Array<IUser>>([]);
@@ -44,12 +47,31 @@ export const TeamDetails: React.FC<Props> = ({ team_id }) => {
 
 				setUsers(users as Array<IUser>);
 				setIsLoading(false);
+
+				// Check if team has been finalized
+				setReceipt(await getReceiptByTeam(team!._id));
 			});
 	}, [team_id]);
 
 	return (<Show headerButtons={() => null} title="" isLoading={isLoading}>
 		<Title level={2}>
 			{team ? `"${team.team_name}"` : "Loading..."}
+			{receipt &&
+				<Popup trigger={
+					<Tooltip title="This team has completed the payment">
+						<Paid style={{ marginLeft: "10px", height: "25px", cursor: "pointer" }} />
+					</Tooltip>
+				}>
+					<Card elevation={5}>
+						<div style={{ padding: "0.5cm 0.5cm 0.5cm 0.5cm" }}>
+							<strong>Transaction ID:</strong>
+							{` ${receipt!.transaction_id}`}
+							<br />
+							<Text> {Moment(receipt.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")} </Text>
+						</div>
+					</Card>
+				</Popup>
+			}
 		</Title>
 
 		<Title level={3}>

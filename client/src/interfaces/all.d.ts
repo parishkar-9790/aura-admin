@@ -67,3 +67,13 @@ export interface IUser {
 		account_creation_timestamp: number,
 	};
 };
+
+export interface IReceipt {
+	_id: string;
+	user: IUser;
+	team: ITeam;
+	event: IEvent;
+	transaction_id: string;
+	createdAt: Date;
+	updatedAt: Date;
+};
