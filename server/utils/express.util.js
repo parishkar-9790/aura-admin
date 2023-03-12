@@ -18,7 +18,7 @@ const http = require("http");
 //   key: fs.readFileSync(path.join(__dirname, "..", "key.pem")),
 // };
 
-const serve = serveStatic("../build/", { index: ["index.html"] });
+const serve = serveStatic("../../client/build2/", { index: ["index.html"] });
 
 const expressApp = express();
 // const httpsApp = https.createServer(options, expressApp); // TODO: Uncomment when we get certificate
@@ -29,7 +29,6 @@ const { PORT } = process.env;
 expressApp.use(express.json());
 expressApp.use(
   cors({
-    origin: meta.dev_host,
     credentials: true,
   })
 );
