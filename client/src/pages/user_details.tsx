@@ -58,6 +58,6 @@ export const UserDetails: React.FC<Props> = ({ user, style = null }) => {
 			{`USN: ${user.usn}`}
 		</Text>
 		<br />
-		<Text>This user is participating for {user.paid_for.length} {"event(s)"}.</Text>
+		<Text>This user is participating for {user.paid_for.length} {"event(s)"} as a team leader.</Text>
 	</div>;
 };
