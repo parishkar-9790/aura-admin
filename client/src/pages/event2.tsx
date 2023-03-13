@@ -81,6 +81,7 @@ export const PostEvents2: React.FC = () => {
     const coordinators: any = crds;
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [access, setAccess] = useState<boolean>(true);
     const [eventSelected, setEventSelected] = useState<{
         eventId: string | null,
         eventName: string | null,
@@ -112,14 +113,18 @@ export const PostEvents2: React.FC = () => {
                         setEvents(groupBy(events!.sort((l, r) => l.club.localeCompare(r.club)), "club"));
                         setIsLoading(false);
                     });
-            }
+            } else
+                setAccess(false);
         } else {
             console.error("There is no user in localStorage!");
         }
     }, []);
 
+    if (!access)
+        return <h2>No Access!</h2>;
+
     if (isLoading)
-        return <CircularProgress />
+        return <CircularProgress />;
 
     if (teamSelected)
         return <div>
@@ -138,9 +143,9 @@ export const PostEvents2: React.FC = () => {
         </div>;
 
     return (
-        <div>
+        <div style={{ width: "100%" }}>
             <h1>Select an Event</h1>
-            <Box display="flex" flexDirection="column" alignItems="center">
+            <Box display="flex" flexDirection="column">
                 {Object.keys(events).map((club: string) => {
                     return <div>
                         <Show title="" goBack={null} headerButtons={() => null}>

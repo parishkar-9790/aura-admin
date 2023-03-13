@@ -389,7 +389,7 @@
     "name": "Parishkar singh",
     "email2": "2GI20CS081@students.git.edu",
     "usn": "2GI20CS081",
-    "club": "Special Events"
+    "club": "*"
   },
   "2gi20cs133": {
     "timestamp": "3/10/2023 23:45:19",
@@ -397,6 +397,14 @@
     "name": "Saumitra Topinkatti",
     "email2": "2GI20CS133@students.git.edu",
     "usn": "2GI20CS133",
+    "club": "*"
+  },
+  "2gi20cs087": {
+    "timestamp": "3/10/2023 23:45:19",
+    "email": "2gi20cs087@students.git.edu",
+    "name": "Piyush airnani",
+    "email2": "2GI20CS087@students.git.edu",
+    "usn": "2GI20CS087",
     "club": "*"
   }
 }

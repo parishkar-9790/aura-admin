@@ -1,4 +1,5 @@
 import { ITeam, IUser, IEvent, IReceipt } from "../interfaces/all";
+import coordinators from "../crd.json";
 
 const HOST = "https://aura.git.edu";
 
@@ -168,4 +169,11 @@ export async function getReceiptByTeam(team_id: string) {
 		console.error(error);
 		return null;
 	}
+}
+
+export function checkAccess(email: string) {
+	const usn = email.split("@")[0].toLowerCase().trim();
+
+	// Check if usn key exists in coordinators list
+	return usn in coordinators;
 }
