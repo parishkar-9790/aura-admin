@@ -9,7 +9,7 @@ interface IUser {
 export const PostList = () => {
     const [user, setUser] = useState<IUser | null>(null);
     const email = user?.email;
-    const username = email?.split("@")[0];
+    // const username = email?.split("@")[0];
 
     useEffect(() => {
         const userJson = localStorage.getItem('user');
@@ -23,7 +23,7 @@ export const PostList = () => {
         <div>
             {user && (
                 <div>
-                    <h1>{username}</h1>
+                    {/*<h1>{username}</h1>*/}
                     <h2>User Profile</h2>
                     <p>Name: {user.name}</p>
                     <p>Email: {user.email}</p>
