@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
 import { sluggify, getAllEvents, getEventsByClub } from "../utils/utils";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import crds from "../crd.json";
 
 import { Button, CircularProgress, Show } from '@pankod/refine-mui';
@@ -127,14 +127,15 @@ export const PostEvents2: React.FC = () => {
     }, []);
 
     if (!access && isSuccess) {
-        toast.error("Sorry! You are not authorized to use the Aura Admin Dashboard.", {
-            position: toast.POSITION.TOP_RIGHT
-        });
+        // Errors: Unable to display properly
+        // toast.error("Sorry! You are not authorized to use the Aura Admin Dashboard.", {
+        //     position: toast.POSITION.TOP_RIGHT
+        // });
 
         logout();
         navigate("/login");
 
-        return <div></div>;
+        return <div>No Access</div>;
     }
 
     if (teamSelected)
