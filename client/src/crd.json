@@ -418,9 +418,17 @@
   "2gi20cs087": {
     "timestamp": "3/10/2023 23:45:19",
     "email": "2gi20cs087@students.git.edu",
-    "name": "Piyush airnani",
+    "name": "Piyush airani",
     "email2": "2GI20CS087@students.git.edu",
     "usn": "2GI20CS087",
     "club": "*"
-  }
+  },
+  "2gi20cs050": {
+  "timestamp": "3/10/2023 23:45:19",
+  "email": "2gi20cs050@students.git.edu",
+  "name": "Kishor Balgi",
+  "email2": "2GI20CS050@students.git.edu",
+  "usn": "2GI20CS050",
+  "club": "*"
+}
 }
