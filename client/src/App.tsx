@@ -19,7 +19,7 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { PostEvents2, AuthUser } from "./pages";
+import { PostEvents2, AuthUser, ListUsers } from "./pages";
 import * as events from "events";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
@@ -103,12 +103,12 @@ function App() {
             catchAll={<ErrorComponent />}
             resources={[
               {
-                name: "User",
-                list: AuthUser,
-              },
-              {
                 name: "Events",
                 list: PostEvents2,
+              },
+              {
+                name: "Users",
+                list: ListUsers,
               }
             ]}
             Title={Title}
