@@ -67,7 +67,7 @@ export const PostTeams: React.FC<Props> = ({ eventId, onClick }) => {
                     <Table.Column
                         dataIndex="team_name"
                         title="Team Name"
-                        render={(name, _, index) => <Button onClick={() => onClick(teams[index]._id)}><span>{name}</span></Button>}
+                        render={(name, _, index) => <Button variant="contained" onClick={() => onClick(teams[index]._id)}><span>{name}</span></Button>}
                     />
                     <Table.Column
                         dataIndex="team_leader"
