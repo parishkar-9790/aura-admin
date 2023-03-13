@@ -1,4 +1,12 @@
 {
+  "2gi20cs027": {
+    "timestamp": "3/13/2023 19:49:00",
+    "email": "2gi20cs027@students.git.edu",
+    "name": "Ayman Bagban",
+    "email2": "2gi20cs027@students.git.edu",
+    "usn": "2gi20cs027",
+    "club": "Fine Arts Club"
+  },
   "2gi20cs102": {
     "timestamp": "3/13/2023 19:28:00",
     "email": "2gi20cs102@students.git.edu",
@@ -424,11 +432,11 @@
     "club": "*"
   },
   "2gi20cs050": {
-  "timestamp": "3/10/2023 23:45:19",
-  "email": "2gi20cs050@students.git.edu",
-  "name": "Kishor Balgi",
-  "email2": "2GI20CS050@students.git.edu",
-  "usn": "2GI20CS050",
-  "club": "*"
-}
+    "timestamp": "3/10/2023 23:45:19",
+    "email": "2gi20cs050@students.git.edu",
+    "name": "Kishor Balgi",
+    "email2": "2GI20CS050@students.git.edu",
+    "usn": "2GI20CS050",
+    "club": "*"
+  }
 }
