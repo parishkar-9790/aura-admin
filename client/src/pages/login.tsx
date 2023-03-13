@@ -68,7 +68,7 @@ export const Login: React.FC = () => {
           }}
         >
           <div>
-            {/*<img src={yariga} alt="Aura Admin Page" />*/}
+            <img src={yariga} alt="Aura Admin Page" height="300" width="600" />
           </div>
           <Box mt={4}>
             <GoogleButton />
