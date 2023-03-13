@@ -27,6 +27,7 @@ async function userGetController(req, res, next) {
 async function userSearchController(req, res, next) {
 	try {
 		let {
+			aura_id = undefined,
 			email = undefined,
 			college = undefined,
 			name = undefined,
@@ -37,9 +38,17 @@ async function userSearchController(req, res, next) {
 			paginationTs = Date.now(),
 		} = req.query;
 
-		if (!email && !name && !usn && (email_verified === undefined || !/^(true|false)$/i.test(email_verified)))
+		if (!aura_id
+			&& !email
+			&& !college
+			&& !name
+			&& !usn
+			&& !phone
+			&& (email_verified === undefined || !/^(true|false)$/i.test(email_verified)))
 			return res.status(400).send(Response(errors[400].searchQueryRequired));
 
+		if (aura_id)
+			aura_id = quoteRegExp(aura_id);
 		if (email)
 			email = quoteRegExp(email);
 		if (college)
@@ -54,6 +63,8 @@ async function userSearchController(req, res, next) {
 			email_verified = email_verified.toLowerCase() === "true";
 
 		const query = {};
+		if (aura_id)
+			query.aura_id = { $regex: queryConfig["search.options"].aura_id.replace("{aura_id}", aura_id), $options: "i" };
 		if (email)
 			query.email = { $regex: queryConfig["search.options"].email.replace("{email}", email), $options: "i" };
 		if (college)
@@ -84,7 +95,7 @@ async function userSearchController(req, res, next) {
 		res.locals.data.pageSize = pageSize;
 		res.locals.data.resultsSize = (users.length === pageSize + 1 ? pageSize : users.length);
 		res.locals.data.paginationTs = (users.length - 1 === pageSize ? users[users.length - 1]._profile_information.account_creation_timestamp : null);
-		res.locals.data.results = users.copyWithin(0, 0, users.length - 1);
+		res.locals.data.results = users.slice(0, pageSize).filter(value => !!value);
 	} catch (error) {
 		const { status, message } = errorHandler(error);
 		return res.status(status).send(Response(message));

@@ -7,6 +7,7 @@ export function sluggify(str: string | undefined) {
 	return str?.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/\s+/, " ").split(" ").join("-");
 };
 
+// Teams
 export async function getTeams(paginationTs: any) {
 	try {
 		const response = await fetch(`${HOST}/teams${paginationTs ? `?paginationTs=${paginationTs}` : ""}`);
@@ -64,7 +65,9 @@ export async function getTeam(team_id: string) {
 		return null;
 	}
 };
+//
 
+// Events
 export async function getEvent(event_id: string) {
 	try {
 		const response = await fetch(`${HOST}/events/resolve/${event_id}`);
@@ -126,7 +129,9 @@ export async function getEventsByClub(clubSlug: string) {
 		return null;
 	}
 }
+//
 
+// User
 export async function getUser(user_id: string) {
 	try {
 		const response = await fetch(`${HOST}/users/${user_id}`);
@@ -149,6 +154,45 @@ export async function getUser(user_id: string) {
 	}
 };
 
+export async function getUsers({
+	aura_id = null,
+	email = null,
+	college = null,
+	name = null,
+	usn = null,
+	phone = null,
+	email_verified = null,
+	paginationTs = Date.now(),
+}) {
+	const queries = [
+		aura_id !== null && `&aura_id=${aura_id}`,
+		email !== null && `&email=${email}`,
+		college !== null && `&college=${college}`,
+		name !== null && `&name=${name}`,
+		usn !== null && `&usn=${usn}`,
+		phone !== null && `&phone=${phone}`,
+		email_verified !== null && `&email_verified=${email_verified}`,
+	].filter(value => value !== false && value !== null);
+
+	try {
+		const response = await fetch(`${HOST}/users/search?paginationTs=${paginationTs}${queries.join("")}`);
+		const json = await response.json();
+
+		return {
+			paginationTs: json.data.paginationTs,
+			users: json.data.results,
+		};
+	} catch (error) {
+		console.error('Error fetching data:', error);
+		return {
+			paginationTs: null,
+			users: [],
+		};
+	}
+}
+//
+
+// Receipt
 export async function getReceiptByTeam(team_id: string) {
 	try {
 		const response = await fetch(`${HOST}/receipts/team/${team_id}`);
@@ -170,6 +214,7 @@ export async function getReceiptByTeam(team_id: string) {
 		return null;
 	}
 }
+//
 
 export function checkAccess(email: string) {
 	const usn = email.split("@")[0].toLowerCase().trim();

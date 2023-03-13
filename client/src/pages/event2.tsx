@@ -4,10 +4,13 @@ import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
 import { sluggify, getAllEvents, getEventsByClub } from "../utils/utils";
+import { toast } from 'react-toastify';
 import crds from "../crd.json";
 
 import { Button, CircularProgress, Show } from '@pankod/refine-mui';
 import { Typography } from '@pankod/refine-antd';
+import { useAuthenticated, useLogout } from '@pankod/refine-core';
+import { useNavigate } from '@pankod/refine-react-router-v6';
 const { Title, Text } = Typography;
 
 
@@ -54,7 +57,7 @@ interface User {
 function getClub(coordinators: any, usn: string) {
     if (!Object.keys(coordinators).includes(usn)) {
         console.error("Not allowed!");
-        return;
+        return null;
     }
 
     const user: User = coordinators[usn]!;
@@ -79,8 +82,12 @@ function groupBy(list: Array<any>, field: string) {
 export const PostEvents2: React.FC = () => {
     const coordinators: any = crds;
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { mutate: logout } = useLogout();
+    const { isSuccess } = useAuthenticated();
     const [access, setAccess] = useState<boolean>(true);
+    const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [eventSelected, setEventSelected] = useState<{
         eventId: string | null,
         eventName: string | null,
@@ -115,15 +122,20 @@ export const PostEvents2: React.FC = () => {
             } else
                 setAccess(false);
         } else {
-            console.error("There is no user in localStorage!");
+            setAccess(false);
         }
     }, []);
 
-    if (!access)
-        return <h2>No Access!</h2>;
+    if (!access && isSuccess) {
+        toast.error("Sorry! You are not authorized to use the Aura Admin Dashboard.", {
+            position: toast.POSITION.TOP_RIGHT
+        });
 
-    // if (isLoading)
-    //     return <CircularProgress />;
+        logout();
+        navigate("/login");
+
+        return <div></div>;
+    }
 
     if (teamSelected)
         return <div>
