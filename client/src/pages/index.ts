@@ -1,13 +1,11 @@
 import { Login } from "./login";
-// import {Participant} from "../pages/participant";
 import { AuthUser } from "./list";
-import { PostEvents } from "./event";
 import { PostEvents2 } from "./event2";
-import { PostTeams } from "./teams"
+import { ListUsers } from "./users";
+
 export {
     Login,
     AuthUser,
-    PostEvents,
     PostEvents2,
-    // Participant
+    ListUsers,
 };

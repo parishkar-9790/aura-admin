@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { PostTeams } from './teams';
 import { TeamDetails } from './team_details';
 import { sluggify, getAllEvents, getEventsByClub } from "../utils/utils";
 import crds from "../crd.json";
 
-import { CircularProgress, Show } from '@pankod/refine-mui';
+import { Button, CircularProgress, Show } from '@pankod/refine-mui';
 import { Typography } from '@pankod/refine-antd';
 const { Title, Text } = Typography;
 
@@ -123,13 +122,13 @@ export const PostEvents2: React.FC = () => {
     if (!access)
         return <h2>No Access!</h2>;
 
-    if (isLoading)
-        return <CircularProgress />;
+    // if (isLoading)
+    //     return <CircularProgress />;
 
     if (teamSelected)
         return <div>
             <h1>Displaying Team</h1>
-            <Button color='primary' onClick={() => setTeamSelected(null)}>Go back</Button>
+            <Button variant="outlined" color='info' onClick={() => setTeamSelected(null)}>Go back</Button>
             <br />
             <TeamDetails key="teamDetails" team_id={teamSelected} />
         </div>;
@@ -137,48 +136,34 @@ export const PostEvents2: React.FC = () => {
     if (eventSelected.eventId)
         return <div>
             <h1>Displaying Teams under "{eventSelected.eventName}"</h1>
-            <Button color='primary' onClick={() => setEventSelected({ eventId: null, eventName: null })}>Go back</Button>
+            <Button variant="outlined" color='info' onClick={() => setEventSelected({ eventId: null, eventName: null })}>Go back</Button>
             <br />
             <PostTeams key="postTeams" eventId={eventSelected.eventId!} onClick={(_id: string) => setTeamSelected(_id)} />
         </div>;
 
     return (
-        <div style={{ width: "100%" }}>
+        <div>
             <h1>Select an Event</h1>
-            <Box display="flex" flexDirection="column">
-                {Object.keys(events).map((club: string) => {
-                    return <div>
-                        <Show title="" goBack={null} headerButtons={() => null}>
-                            <Title level={3}>{club}</Title>
+            {isLoading ?
+                <CircularProgress /> :
+                <Box display="flex" flexDirection="column">
+                    {Object.keys(events).map((club: string) => {
+                        return <div>
+                            <Show title="" goBack={null} headerButtons={() => null}>
+                                <Title level={3}>{club}</Title>
 
-                            {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
-                                <div>
-                                    <Button style={{ marginBottom: "10px" }} variant="contained" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
-                                        {event.title}
-                                    </Button>
-                                    <br />
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                    {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
+                                        <Button variant="contained" color="info" style={{ marginBottom: "10px" }} onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
+                                            {event.title}
+                                        </Button>
+                                    )}
                                 </div>
-                            )}
-                        </Show>
-                        <br />
-                    </div>;
-                })}
-                {/* {Object.keys(events).map((club: string) => {
-                    return <div>
-                        <Box key={club} m={2}>
-                            <h2 style={{ color: "#5555bb" }}>{club}</h2>
-                        </Box>
-                        {events[club].sort((l: Event, r: Event) => l.title.localeCompare(r.title)).map((event: any) =>
-                            <div>
-                                <Button style={{ marginBottom: "10px" }} variant="outlined" color="primary" onClick={() => setEventSelected({ eventId: event._id, eventName: event.title })}>
-                                    {event.title}
-                                </Button>
-                                <br />
-                            </div>
-                        )}
-                    </div>;
-                })} */}
-            </Box>
+                            </Show>
+                            <br />
+                        </div>;
+                    })}
+                </Box>}
         </div>
     );
 };
