@@ -1,4 +1,11 @@
+import { AuthProvider, useAuthenticated, useLogout } from '@pankod/refine-core';
+import { useNavigate } from "react-router-dom"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useEffect, useState } from 'react';
+import { checkAccess } from 'utils/utils';
 
 interface IUser {
     name: string;
@@ -6,18 +13,43 @@ interface IUser {
     avatar: string;
 }
 
-export const PostList = () => {
+export const AuthUser = () => {
+    const { mutate: logout } = useLogout();
+    const { isSuccess, isLoading, isError } = useAuthenticated();
+
     const [user, setUser] = useState<IUser | null>(null);
+    const [access, setAccess] = useState<boolean>(true);
     const email = user?.email;
-    // const username = email?.split("@")[0];
+
+    const navigate = useNavigate();
 
     useEffect(() => {
+        console.log("use effect");
+
         const userJson = localStorage.getItem('user');
         if (userJson) {
             const userObj: IUser = JSON.parse(userJson);
-            setUser(userObj);
+
+            if (!checkAccess(userObj.email)) {
+                // Access denied
+                setAccess(false);
+            } else
+                setUser(userObj);
         }
     }, []);
+
+    if (!access && isSuccess) {
+        console.log("Here!");
+
+        toast.error("Sorry! You are not authorized to use the Aura Admin Dashboard.", {
+            position: toast.POSITION.TOP_RIGHT
+        });
+
+        logout();
+        navigate("/login");
+
+        return <div></div>;
+    }
 
     return (
         <div>
