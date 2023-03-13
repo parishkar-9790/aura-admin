@@ -77,13 +77,13 @@ export const TeamDetails: React.FC<Props> = ({ team_id }) => {
 		<Title level={3}>
 			Leader details
 		</Title>
-		{!isLoading && <UserDetails user={users[0]} />}
+		{!isLoading && <UserDetails user={users[0]} style={{}} />}
 
 		<Title level={3}>
 			{`${team?.team_members.length} Team Member(s)`}
 		</Title>
 		{!isLoading && users.slice(1).map(user => <div>
-			<UserDetails user={user} />
+			<UserDetails user={user} style={{}} />
 			<br />
 		</div>)}
 	</Show>);
