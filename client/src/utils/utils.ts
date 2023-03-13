@@ -1,6 +1,6 @@
 import { ITeam, IUser, IEvent, IReceipt } from "../interfaces/all";
 
-const HOST = "http://localhost:3000";
+const HOST = "https://aura.git.edu";
 
 export function sluggify(str: string | undefined) {
 	return str?.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/\s+/, " ").split(" ").join("-");
