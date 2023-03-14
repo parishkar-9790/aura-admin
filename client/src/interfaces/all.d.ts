@@ -49,6 +49,21 @@ export interface ITeam {
 	__v: number;
 };
 
+export interface ITeamExt {
+	event_participated: {
+		event_id: string;
+		event_title: string;
+	};
+	team_leader_doc: IUser;
+	_id: string;
+	team_name: string;
+	team_members_docs: Array<IUser>;
+	receipt: IReceipt | null;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+};
+
 export interface IUser {
 	_id: string;
 	aura_id: string;
@@ -74,6 +89,6 @@ export interface IReceipt {
 	team: ITeam;
 	event: IEvent;
 	transaction_id: string;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt: string;
+	updatedAt: string;
 };

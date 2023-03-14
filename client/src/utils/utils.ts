@@ -1,10 +1,10 @@
-import { ITeam, IUser, IEvent, IReceipt } from "../interfaces/all";
+import { ITeam, IUser, IEvent, IReceipt, ITeamExt } from "../interfaces/all";
 import coordinators from "../crd.json";
 
 const HOST = "http://localhost:4000";
 
-export function sluggify(str: string | undefined) {
-	return str?.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/\s+/, " ").split(" ").join("-");
+export function sluggify(str: string | undefined | null) {
+	return str?.trim()?.toLowerCase()?.replace(/[^a-z0-9 -]/g, "")?.replace(/\s+/, " ")?.split(" ")?.join("-");
 };
 
 // Teams
@@ -40,6 +40,24 @@ export async function getTeamsByEvent(event_id: string, paginationTs: any) {
 		return {
 			paginationTs: null,
 			teams: [],
+		};
+	}
+};
+
+export async function getCompleteTeamsByEvent(event_id: string, paginationTs: any) {
+	try {
+		const response = await fetch(`${HOST}/teams/event/${event_id}/complete${paginationTs ? `?paginationTs=${paginationTs}` : ""}`);
+		const json = await response.json();
+
+		return {
+			paginationTs: json.data.paginationTs,
+			teams: json.data.results as Array<ITeamExt>,
+		};
+	} catch (error) {
+		console.error('Error fetching data:', error);
+		return {
+			paginationTs: null,
+			teams: [] as Array<ITeamExt>,
 		};
 	}
 };
@@ -287,4 +305,25 @@ export function checkAccess(email: string) {
 
 	// Check if usn key exists in coordinators list
 	return usn in coordinators;
+}
+
+export function getClubSlug() {
+	const userJson = localStorage.getItem('user');
+	if (userJson) {
+		const userObj: IUser = JSON.parse(userJson);
+		const usn = (userObj.email?.split("@")[0]?.toLowerCase()?.trim() ?? "");
+		const club = (coordinators as any)[usn]?.club;
+
+		if (club === "*")
+			return club;
+
+		const clubSlug = sluggify(club);
+		return clubSlug;
+	}
+
+	return null;
+}
+
+export async function sleep(duration: number) {
+	return new Promise((resolve, _) => setTimeout(resolve, duration));
 }
