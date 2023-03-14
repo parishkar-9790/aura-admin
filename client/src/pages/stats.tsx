@@ -6,10 +6,14 @@ import {
   getNumberOfUnpaidTeams,
   getTotalParticipantsCount,
   getAllEvents,
+  getTotalGitParticipantsCount,
 } from "utils/utils";
 
 export const StatsPage: React.FC = () => {
   const [totalParticipation, setTotalParticipation] = useState<number | null>(
+    null
+  );
+  const [totalGitParticipation, setTotalGitParticipation] = useState<number | null>(
     null
   );
   const [paidTeams, setPaidTeams] = useState<number | null>(null);
@@ -21,6 +25,12 @@ export const StatsPage: React.FC = () => {
       if (count === null) return console.error("Failed to get count!");
 
       setTotalParticipation(count);
+    });
+
+    getTotalGitParticipantsCount().then((count) => {
+      if (count === null) return console.error("Failed to get count!");
+
+      setTotalGitParticipation(count);
     });
 
     getNumberOfPaidTeams().then((count) => {
@@ -65,6 +75,20 @@ export const StatsPage: React.FC = () => {
             </span>
             <h3>
               <People fontSize="inherit" /> Total Participants
+            </h3>
+          </div>
+        ) : (
+          <CircularProgress />
+        )}
+        <br />
+        <br />
+        {totalGitParticipation !== null ? (
+          <div>
+            <span style={{ fontSize: "40px", color: "#9999ff" }}>
+              <strong>{totalGitParticipation.toLocaleString("en-IN")}</strong>
+            </span>
+            <h3>
+              <People fontSize="inherit" /> Total Participants from GIT (Note: This value is prone to a ±50 margin of error)
             </h3>
           </div>
         ) : (
