@@ -103,17 +103,17 @@ function App() {
             catchAll={<ErrorComponent />}
             resources={[
               {
-                name: "Stats",
-                list: StatsPage,
-              },
-              {
                 name: "Events",
                 list: PostEvents2,
               },
               {
                 name: "Users",
                 list: ListUsers,
-              }
+              },
+              {
+                name: "Stats",
+                list: StatsPage,
+              },
             ]}
             Title={Title}
             Sider={Sider}
