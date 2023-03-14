@@ -13,9 +13,9 @@ export const StatsPage: React.FC = () => {
   const [totalParticipation, setTotalParticipation] = useState<number | null>(
     null
   );
-  const [totalGitParticipation, setTotalGitParticipation] = useState<number | null>(
-    null
-  );
+  const [totalGitParticipation, setTotalGitParticipation] = useState<
+    number | null
+  >(null);
   const [paidTeams, setPaidTeams] = useState<number | null>(null);
   const [unpaidTeams, setUnpaidTeams] = useState<number | null>(null);
   const [events, setEvents] = useState<any>(null);
@@ -47,6 +47,18 @@ export const StatsPage: React.FC = () => {
 
     getAllEvents().then((eve: any) => {
       if (eve === null) return console.error("Failed to get events!");
+      // let eves: any = [];
+
+      // eve.map((event: any) => {
+      //   eves.push({
+      //     title: event.title,
+      //     club: event.club,
+      //     team_size: event.team_size,
+      //     min_team_size: event.min_team_size,
+      //     _id: event._id,
+      //   });
+      // });
+      // console.log(eves);
       let groupedEvents: any = {};
       for (const item of eve) {
         if (!groupedEvents[item.club]) {
@@ -55,9 +67,6 @@ export const StatsPage: React.FC = () => {
         groupedEvents[item.club].push(item);
       }
       setEvents(groupedEvents);
-      for (const event in groupedEvents) {
-        console.log(event);
-      }
     });
   }, []);
 
@@ -88,7 +97,8 @@ export const StatsPage: React.FC = () => {
               <strong>{totalGitParticipation.toLocaleString("en-IN")}</strong>
             </span>
             <h3>
-              <People fontSize="inherit" /> Total Participants from GIT (Note: This value is prone to a ±50 margin of error)
+              <People fontSize="inherit" /> Total Participants from GIT (Note:
+              This value is prone to a ±50 margin of error)
             </h3>
           </div>
         ) : (

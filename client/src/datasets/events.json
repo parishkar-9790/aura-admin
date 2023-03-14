@@ -1,0 +1,310 @@
+[
+  {
+    "title": "The poetic pulse (Slam Poetry)",
+    "club": "Literary Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997ea"
+  },
+  {
+    "title": "Canvas chronicles (Canvas painting).",
+    "club": "Fine Arts Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997eb"
+  },
+  {
+    "title": "Solo Serenade- Classical",
+    "club": "Dance Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997ec"
+  },
+  {
+    "title": "The Startup-Showdown (PITCH TANK)",
+    "club": "Literary Club",
+    "team_size": 3,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997ed"
+  },
+  {
+    "title": "Waltz and Wander",
+    "club": "Dance Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997ee"
+  },
+  {
+    "title": "Cyber Clash (VALORANT)",
+    "club": "E-Gaming",
+    "team_size": 6,
+    "min_team_size": 5,
+    "_id": "6406b733cb5e5780efd997ef"
+  },
+  {
+    "title": "Musica classica (Solo Classical Singing)",
+    "club": "Music Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f0"
+  },
+  {
+    "title": "Minutes of Magic",
+    "club": "Photography Club",
+    "team_size": 6,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f1"
+  },
+  {
+    "title": "SAMVED (Nukkad Natak)",
+    "club": "Dramatics",
+    "team_size": 16,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f2"
+  },
+  {
+    "title": "ESCAPE ROOM",
+    "club": "Special Events",
+    "team_size": 4,
+    "min_team_size": 3,
+    "_id": "6406b733cb5e5780efd997f4"
+  },
+  {
+    "title": "Pencraft (Story Writing)",
+    "club": "Literary Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f5"
+  },
+  {
+    "title": "Meddle the muddle (Potpourri)",
+    "club": "Literary Club",
+    "team_size": 3,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f6"
+  },
+  {
+    "title": "Kala mandala (Rangoli art).",
+    "club": "Fine Arts Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f7"
+  },
+  {
+    "title": "La Fotografia",
+    "club": "Photography Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f8"
+  },
+  {
+    "title": "Solo Serenade-Western",
+    "club": "Dance Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997f9"
+  },
+  {
+    "title": "Viva la vida (Battle of Bands)",
+    "club": "Music Club",
+    "team_size": 10,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997fa"
+  },
+  {
+    "title": "A Quest to El Dorado! (Treasure Hunt)",
+    "club": "Special Events",
+    "team_size": 4,
+    "min_team_size": 4,
+    "_id": "6406b733cb5e5780efd997fb"
+  },
+  {
+    "title": "RENDEZVOUS OF FLAIR (AURA’S GOT TALENT)  -- The spotlight is yours to seize!",
+    "club": "Special Events",
+    "team_size": 10,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997fc"
+  },
+  {
+    "title": "Rampe des Cultures",
+    "club": "Fashion Club",
+    "team_size": 12,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997fd"
+  },
+  {
+    "title": "Sensory sensations (Blind art)",
+    "club": "Fine Arts Club",
+    "team_size": 4,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997fe"
+  },
+  {
+    "title": "MEMEKARAN (Meme making)",
+    "club": "Dramatics",
+    "team_size": 3,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd997ff"
+  },
+  {
+    "title": "Fiesta de la culturas (Artathon)",
+    "club": "Fine Arts Club",
+    "team_size": 4,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99800"
+  },
+  {
+    "title": "RIL MOSAIC",
+    "club": "Photography Club",
+    "team_size": 4,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99801"
+  },
+  {
+    "title": "La Promenade",
+    "club": "Fashion Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99802"
+  },
+  {
+    "title": "Astitva",
+    "club": "Dramatics",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99803"
+  },
+  {
+    "title": "Cyber Clash (FIFA)",
+    "club": "E-Gaming",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99804"
+  },
+  {
+    "title": "Demagoguery (Shipwreck)",
+    "club": "Literary Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99806"
+  },
+  {
+    "title": "Bollydome (Eastern) & Sonata soireé (Western) (Solo Singing)",
+    "club": "Music Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99807"
+  },
+  {
+    "title": "Beethoven's pub(Solo Instrumental)",
+    "club": "Music Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99808"
+  },
+  {
+    "title": "Spontanetics (Just-a-minute (JAM))",
+    "club": "Literary Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99809"
+  },
+  {
+    "title": "Rythmic Renaissance",
+    "club": "Dance Club",
+    "team_size": 10,
+    "min_team_size": 8,
+    "_id": "6406b733cb5e5780efd9980a"
+  },
+  {
+    "title": "Symphonic studio (Unplugged)",
+    "club": "Music Club",
+    "team_size": 8,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd9980b"
+  },
+  {
+    "title": "\"ANDHADHUN (Mad-Ads)\"",
+    "club": "Dramatics",
+    "team_size": 6,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd9980c"
+  },
+  {
+    "title": "Picture perfect faces (Face painting)",
+    "club": "Fine Arts Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd9980d"
+  },
+  {
+    "title": "Shauryavyuha 2.0 ",
+    "club": "Shaurya Club ",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd9980e"
+  },
+  {
+    "title": "Wordsmith wars (Debate)",
+    "club": "Literary Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd9980f"
+  },
+  {
+    "title": "Belligerence: The Ultimate Showdown (Mr. and Ms. Aura)",
+    "club": "Special Events",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99810"
+  },
+  {
+    "title": "MUKHOTA (Mimicry)",
+    "club": "Dramatics",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99811"
+  },
+  {
+    "title": "Two to tango(Duet Singing)",
+    "club": "Music Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99812"
+  },
+  {
+    "title": "Battle de beaute",
+    "club": "Fashion Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99813"
+  },
+  {
+    "title": "Uptown funk(RAP)",
+    "club": "Music Club",
+    "team_size": 1,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99814"
+  },
+  {
+    "title": "MegaWhats?",
+    "club": "Quiz Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99815"
+  },
+  {
+    "title": "The Cultural Odyssey Quiz",
+    "club": "Quiz Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99816"
+  },
+  {
+    "title": "The Game & Glam Quiz",
+    "club": "Quiz Club",
+    "team_size": 2,
+    "min_team_size": 1,
+    "_id": "6406b733cb5e5780efd99817"
+  }
+]
