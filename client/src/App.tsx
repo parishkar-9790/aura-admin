@@ -19,7 +19,7 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { PostEvents2, ListUsers, StatsPage,AddTeams } from "./pages";
+import { PostEvents2, ListUsers, StatsPage, AddTeams, DownloaderPage } from "./pages";
 import * as events from "./events.json";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
@@ -115,9 +115,13 @@ function App() {
                 list: StatsPage,
               },
               {
-                name: "teams",
-                list:AddTeams
-              }
+                name: "Download",
+                list: DownloaderPage,
+              },
+              // { // Not yet ready, uncomment while testing
+              //   name: "teams",
+              //   list:AddTeams
+              // }
             ]}
             Title={Title}
             Sider={Sider}

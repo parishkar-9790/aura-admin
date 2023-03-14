@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
@@ -10,7 +11,7 @@ const root = createRoot(container);
 
 root.render(
   <div>
-    {/* <ToastContainer /> */}
+    <ToastContainer />
     <App />
   </div>
 );
