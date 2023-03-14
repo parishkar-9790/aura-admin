@@ -1,5 +1,6 @@
 import { ITeam, IUser, IEvent, IReceipt } from "../interfaces/all";
 import coordinators from "../crd.json";
+import errors from "./error.codes.json";
 
 const HOST = "http://localhost:4000";
 
@@ -12,6 +13,50 @@ export function sluggify(str: string | undefined) {
     .split(" ")
     .join("-");
 }
+
+// Create Team Error handler:
+const errorHandler = (err: any) => {
+  console.log(err);
+  let err_status = err.response.status;
+  let err_code = err.response.data.error;
+  if (err_status === 400) {
+    if (err_code === errors[400].eventDetailsRequired) {
+      return "Event Details Required!";
+    }
+    if (err_code === errors[400].teamNameRequired) {
+      return "Team Name Required!";
+    }
+    if (err_code === errors[400].minTeamCount) {
+      return "Minimum Team Size Required!";
+    }
+  } else if (err_status === 401) {
+    if (
+      err_code === errors[401].authRequired ||
+      err_code === errors[401].invalidOrExpiredToken
+    ) {
+      return "You are not authorized to perform this operation. Please login and try again.";
+    }
+  } else if (err_status === 403) {
+    if (err_code === errors[403].teamMemberEmailUnverified) {
+      return "One or more team members have not verified their email address. Please ask them to verify their email address and try again.";
+    }
+    if (err_code === errors[403].invalidOperation) {
+      return "You cannot add yourself as a team member!";
+    }
+    if (err_code === errors[403].teamMemberAlreadyRegistered) {
+      return "One or more team members have already registered for another team!";
+    }
+    if (err_code === errors[403].eventAlreadyRegistered) {
+      return "You have already registered for this event!";
+    }
+  } else if (err_status === 404) {
+    if (err_code === errors[404].userNotFound) {
+      return "One or more team members are not registered!";
+    }
+  } else {
+    return "Team Registration Failed!";
+  }
+};
 
 // Teams
 export async function getTeams(paginationTs: any) {
@@ -176,8 +221,7 @@ export async function createTeam(data: any) {
     }
     return { status: true, message: json.message };
   } catch (error) {
-    console.log(error);
-    return { status: false, message: error };
+    errorHandler(error);
   }
 }
 
@@ -261,19 +305,18 @@ export async function getTotalParticipantsCount() {
 }
 
 export async function getTotalGitParticipantsCount() {
-	try {
-		const response = await fetch(`${HOST}/receipts/stats/participation/git`);
-		if (response.status !== 200)
-			return null;
+  try {
+    const response = await fetch(`${HOST}/receipts/stats/participation/git`);
+    if (response.status !== 200) return null;
 
-		const json = await response.json();
-		const count = json.data.result[0]?.total_gitian_participation;
+    const json = await response.json();
+    const count = json.data.result[0]?.total_gitian_participation;
 
-		return count as number;
-	} catch (error) {
-		console.error(error);
-		return null;
-	}
+    return count as number;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 export async function getNumberOfUnpaidTeams() {
