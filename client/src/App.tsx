@@ -19,7 +19,7 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { PostEvents2, ListUsers } from "./pages";
+import { PostEvents2, ListUsers, StatsPage } from "./pages";
 import * as events from "events";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
@@ -109,7 +109,11 @@ function App() {
               {
                 name: "Users",
                 list: ListUsers,
-              }
+              },
+              {
+                name: "Stats",
+                list: StatsPage,
+              },
             ]}
             Title={Title}
             Sider={Sider}
