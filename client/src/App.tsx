@@ -19,8 +19,8 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { PostEvents2, ListUsers, StatsPage } from "./pages";
-import * as events from "events";
+import { PostEvents2, ListUsers, StatsPage,AddTeams } from "./pages";
+import * as events from "./events.json";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -114,6 +114,10 @@ function App() {
                 name: "Stats",
                 list: StatsPage,
               },
+              {
+                name: "teams",
+                list:AddTeams
+              }
             ]}
             Title={Title}
             Sider={Sider}

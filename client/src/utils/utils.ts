@@ -260,6 +260,22 @@ export async function getTotalParticipantsCount() {
   }
 }
 
+export async function getTotalGitParticipantsCount() {
+	try {
+		const response = await fetch(`${HOST}/receipts/stats/participation/git`);
+		if (response.status !== 200)
+			return null;
+
+		const json = await response.json();
+		const count = json.data.result[0]?.total_gitian_participation;
+
+		return count as number;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
 export async function getNumberOfUnpaidTeams() {
   try {
     const response = await fetch(`${HOST}/teams/stats/unpaid`);
