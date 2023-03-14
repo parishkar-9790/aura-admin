@@ -227,8 +227,11 @@ export async function getUser(user_id: string) {
 
 export async function createTeam(data: any) {
   try {
-    const response = await fetch(`${HOST}/teams/createteam`, {
+    const response = await fetch(`${HOST}/teams/createteam/noauth`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(data),
     });
     const json = await response.json();
