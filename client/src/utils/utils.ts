@@ -216,6 +216,56 @@ export async function getReceiptByTeam(team_id: string) {
 }
 //
 
+// Stats
+export async function getTotalParticipantsCount() {
+	try {
+		const response = await fetch(`${HOST}/receipts/stats/participation`);
+		if (response.status !== 200)
+			return null;
+
+		const json = await response.json();
+		const count = json.data.result[0]?.total_participation;
+
+		return count as number;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
+export async function getNumberOfUnpaidTeams() {
+	try {
+		const response = await fetch(`${HOST}/teams/stats/unpaid`);
+		if (response.status !== 200)
+			return null;
+
+		const json = await response.json();
+		const count = json.data.result[0]?.unpaid_teams_count;
+
+		return count as number;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
+export async function getNumberOfPaidTeams() {
+	try {
+		const response = await fetch(`${HOST}/teams/stats/paid`);
+		if (response.status !== 200)
+			return null;
+
+		const json = await response.json();
+		const count = json.data.result[0]?.paid_teams_count;
+
+		return count as number;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+//
+
 export function checkAccess(email: string) {
 	const usn = email.split("@")[0].toLowerCase().trim();
 
