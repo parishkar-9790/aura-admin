@@ -115,12 +115,15 @@ export const AddTeams: React.FC = () => {
       team_name: teamName,
       team_members: [teamLeader, ...teamMembers],
     };
-    console.log(data);
     createTeam(data).then((res: any) => {
       if (res?.status) {
         setMsg("Team created successfully");
       } else {
-        setMsg(res);
+        if (res.status === false) {
+          setMsg(res.message);
+        } else {
+          setMsg(res);
+        }
       }
     });
   };
