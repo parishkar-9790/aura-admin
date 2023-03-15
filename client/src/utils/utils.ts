@@ -1,7 +1,7 @@
 import { ITeam, IUser, IEvent, IReceipt, ITeamExt } from "../interfaces/all";
 import coordinators from "../crd.json";
 import errors from "./error.codes.json";
-
+import { successToast, errorToast } from "./Toasts/Toasts";
 const HOST = "http://localhost:4000";
 
 export function sluggify(str: string | undefined) {
@@ -248,11 +248,36 @@ export async function createTeam(data: any) {
       console.error("Error code:", json.error);
       return errorHandler(json.error);
     }
+    console.log(json.data);
+    const receipt = {
+      team_id: json.data.team._id,
+      transaction_id: data.transaction_id,
+    };
+    generateReceipt(receipt);
     return { status: true, message: json.message };
   } catch (error) {
     errorHandler(error);
   }
 }
+
+const generateReceipt = async (data: any) => {
+  try {
+    console.log(data);
+    const response = await fetch(`${HOST}/receipts`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const json = await response.json();
+    if (!json.success) {
+      console.error("Error code:", json.error);
+      return errorToast("Error generating Payment Receipt");
+    }
+    return successToast("Payment Receipt Generated");
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export async function getUsers({
   aura_id = null,
