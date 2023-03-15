@@ -7,11 +7,11 @@ import { DownloaderPage } from "./downloader";
 import { SearchTeams } from "./search_teams";
 
 export {
-    Login,
-    PostEvents2,
-    ListUsers,
-    StatsPage,
-    AddTeams,
-    DownloaderPage,
-    SearchTeams,
+  Login,
+  PostEvents2,
+  ListUsers,
+  StatsPage,
+  AddTeams,
+  DownloaderPage,
+  SearchTeams,
 };

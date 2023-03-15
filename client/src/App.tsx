@@ -25,6 +25,7 @@ import {
   StatsPage,
   DownloaderPage,
   SearchTeams,
+  AddTeams,
 } from "./pages";
 import * as events from "./events.json";
 // import { Participant } from "pages/participant"
@@ -116,6 +117,10 @@ function App() {
                 list: ListUsers,
               },
               {
+                name: "Teams",
+                list: AddTeams,
+              },
+              {
                 name: "Stats",
                 list: StatsPage,
               },
@@ -125,7 +130,7 @@ function App() {
               },
               {
                 // Not yet ready, uncomment while testing
-                name: "teams",
+                name: "Search",
                 list: SearchTeams,
               },
             ]}
