@@ -325,7 +325,7 @@ export const ListUsers: React.FC = () => {
 		<RefreshButton
 			fullWidth={true}
 			onClick={() => performSearch()}
-			disabled={!paginationTs}>
+			disabled={!paginationTs || searching}>
 			{paginationTs ? "Load next 20 results" : "No more results!"}
 		</RefreshButton>
 	</div>;

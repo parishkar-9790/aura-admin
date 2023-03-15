@@ -80,11 +80,49 @@ export async function getTeams(paginationTs: any) {
   }
 }
 
+export async function getTeamsExtQuery({
+  eventId = null,
+  teamName = null,
+  teamMemberAuraId = null,
+  paymentStatus = null,
+  paginationTs = Date.now(),
+}) {
+  const queries = [
+    eventId !== null && `&eventId=${eventId}`,
+    teamName !== null && `&teamName=${teamName}`,
+    teamMemberAuraId !== null && `&teamMemberAuraId=${teamMemberAuraId}`,
+    paymentStatus !== null && `&paymentStatus=${!!paymentStatus}`,
+  ].filter((value) => value !== false && value !== null);
+
+  try {
+    const response = await fetch(
+      `${HOST}/teams?paginationTs=${paginationTs}${queries.join("")}`,
+    );
+    if (response.status !== 200)
+      return {
+        paginationTs: null,
+        teams: [],
+      };
+
+    const json = await response.json();
+
+    return {
+      paginationTs: json.data.paginationTs,
+      teams: json.data.results,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      paginationTs: null,
+      teams: [],
+    };
+  }
+}
+
 export async function getTeamsByEvent(event_id: string, paginationTs: any) {
   try {
     const response = await fetch(
-      `${HOST}/teams/event/${event_id}${
-        paginationTs ? `?paginationTs=${paginationTs}` : ""
+      `${HOST}/teams/event/${event_id}${paginationTs ? `?paginationTs=${paginationTs}` : ""
       }`
     );
     const json = await response.json();
@@ -108,8 +146,7 @@ export async function getCompleteTeamsByEvent(
 ) {
   try {
     const response = await fetch(
-      `${HOST}/teams/event/${event_id}/complete${
-        paginationTs ? `?paginationTs=${paginationTs}` : ""
+      `${HOST}/teams/event/${event_id}/complete${paginationTs ? `?paginationTs=${paginationTs}` : ""
       }`
     );
     const json = await response.json();
@@ -249,35 +286,16 @@ export async function createTeam(data: any) {
       return errorHandler(json.error);
     }
     console.log(json.data);
-    const receipt = {
-      team_id: json.data.team._id,
-      transaction_id: data.transaction_id,
-    };
-    generateReceipt(receipt);
+    // const receipt = {
+    //   team_id: json.data.team._id,
+    //   transaction_id: data.transaction_id,
+    // };
+    // generateReceipt(receipt);
     return { status: true, message: json.message };
   } catch (error) {
     errorHandler(error);
   }
 }
-
-const generateReceipt = async (data: any) => {
-  try {
-    console.log(data);
-    const response = await fetch(`${HOST}/receipts`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-    if (!json.success) {
-      console.error("Error code:", json.error);
-      return errorToast("Error generating Payment Receipt");
-    }
-    return successToast("Payment Receipt Generated");
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
 
 export async function getUsers({
   aura_id = null,
