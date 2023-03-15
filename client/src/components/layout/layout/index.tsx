@@ -26,7 +26,7 @@ export const Layout: React.FC<LayoutProps> = ({
           minHeight: "100vh",
         }}
       >
-        <HeaderToRender />
+        {/* <HeaderToRender /> */}
         <Box
           component="main"
           sx={{

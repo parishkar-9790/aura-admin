@@ -323,112 +323,114 @@ export const AddTeams: React.FC = () => {
   ];
 
   return (
-    <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>
-      {msg !== "" && (
-        <Typography
-          variant="h6"
-          color="error"
-          sx={{ textAlign: "center", mb: 2 }}
+    <div>
+      <Create title={"Create new Team"} goBack={null} isLoading={formLoading} saveButtonProps={saveButtonProps}>
+        {msg !== "" && (
+          <Typography
+            variant="h6"
+            color="error"
+            sx={{ textAlign: "center", mb: 2 }}
+          >
+            {msg}
+          </Typography>
+        )}
+        <Box
+          component="form"
+          sx={{ display: "flex", flexDirection: "column" }}
+          autoComplete="off"
         >
-          {msg}
-        </Typography>
-      )}
-      <Box
-        component="form"
-        sx={{ display: "flex", flexDirection: "column" }}
-        autoComplete="off"
-      >
-        <Controller
-          control={control}
-          name="category"
-          rules={{ required: "This field is required" }}
-          defaultValue={null}
-          render={({ field }) => (
-            <Autocomplete
-              {...categoryAutocompleteProps}
-              {...field}
-              onChange={(_, value) => {
-                field.onChange(value);
-                handleCategoryChange(value);
-              }}
-              getOptionLabel={(item) => {
-                return (
-                  categoryOptions.find(
-                    (p) => p.id.toString() === item?.id?.toString()
-                  )?.title ?? ""
-                );
-              }}
-              isOptionEqualToValue={(option, value) =>
-                value === undefined ||
-                option.id.toString() === value?.id?.toString()
-              }
-              options={categoryOptions}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Event"
-                  margin="normal"
-                  variant="outlined"
-                  error={!!(errors as any)?.category?.id}
-                  helperText={(errors as any)?.category?.id?.message}
-                  required
-                  disabled
-                />
-              )}
-            />
-          )}
-        />
-        <TextField
-          {...register("Team Name", {
-            required: "This field is required",
-          })}
-          error={!!(errors as any)?.title}
-          helperText={(errors as any)?.title?.message}
-          margin="normal"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          type="text"
-          label="Team Name"
-          name="Team Name"
-          value={teamName}
-          onChange={(e) => {
-            setTeamName(e.target.value);
-          }}
-        />
-        <TextField
-          {...register("Team Leader", {
-            required: "This field is required",
-          })}
-          error={!!(errors as any)?.content}
-          helperText={(errors as any)?.content?.message}
-          margin="normal"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          multiline
-          label="Team Leader (Aura ID)"
-          name="Team Leader"
-          value={teamLeader}
-          onChange={(e) => {
-            setTeamLeader(e.target.value);
-          }}
-        />
+          <Controller
+            control={control}
+            name="category"
+            rules={{ required: "This field is required" }}
+            defaultValue={null}
+            render={({ field }) => (
+              <Autocomplete
+                {...categoryAutocompleteProps}
+                {...field}
+                onChange={(_, value) => {
+                  field.onChange(value);
+                  handleCategoryChange(value);
+                }}
+                getOptionLabel={(item) => {
+                  return (
+                    categoryOptions.find(
+                      (p) => p.id.toString() === item?.id?.toString()
+                    )?.title ?? ""
+                  );
+                }}
+                isOptionEqualToValue={(option, value) =>
+                  value === undefined ||
+                  option.id.toString() === value?.id?.toString()
+                }
+                options={categoryOptions}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Event"
+                    margin="normal"
+                    variant="outlined"
+                    error={!!(errors as any)?.category?.id}
+                    helperText={(errors as any)?.category?.id?.message}
+                    required
+                    disabled
+                  />
+                )}
+              />
+            )}
+          />
+          <TextField
+            {...register("Team Name", {
+              required: "This field is required",
+            })}
+            error={!!(errors as any)?.title}
+            helperText={(errors as any)?.title?.message}
+            margin="normal"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            type="text"
+            label="Team Name"
+            name="Team Name"
+            value={teamName}
+            onChange={(e) => {
+              setTeamName(e.target.value);
+            }}
+          />
+          <TextField
+            {...register("Team Leader", {
+              required: "This field is required",
+            })}
+            error={!!(errors as any)?.content}
+            helperText={(errors as any)?.content?.message}
+            margin="normal"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            multiline
+            label="Team Leader (Aura ID)"
+            name="Team Leader"
+            value={teamLeader}
+            onChange={(e) => {
+              setTeamLeader(e.target.value);
+            }}
+          />
 
-        {event !== null && <>{renderTeamForm(event.team_size - 1)}</>}
-        <TextField
-          {...register("Transaction Id", {
-            required: "This field is required",
-          })}
-          error={!!(errors as any)?.content}
-          helperText={(errors as any)?.content?.message}
-          margin="normal"
-          label="Transaction Id"
-          name="TransactionId"
-          value={transactionId}
-          onChange={(e) => {
-            setTransactionId(e.target.value);
-          }}
-        />
-      </Box>
-    </Create>
+          {event !== null && <>{renderTeamForm(event.team_size - 1)}</>}
+          <TextField
+            {...register("Transaction Id", {
+              required: "This field is required",
+            })}
+            error={!!(errors as any)?.content}
+            helperText={(errors as any)?.content?.message}
+            margin="normal"
+            label="Transaction Id"
+            name="TransactionId"
+            value={transactionId}
+            onChange={(e) => {
+              setTransactionId(e.target.value);
+            }}
+          />
+        </Box>
+      </Create>
+    </div>
   );
 };

@@ -4,7 +4,7 @@ import { ListUsers } from "./users";
 import { StatsPage } from "./stats";
 import { AddTeams } from "./add_teams";
 import { DownloaderPage } from "./downloader";
-import { TeamSearch } from "./teamSearch";
+import { SearchTeams } from "./search_teams";
 
 export {
   Login,
@@ -13,5 +13,5 @@ export {
   StatsPage,
   AddTeams,
   DownloaderPage,
-  TeamSearch,
+  SearchTeams,
 };

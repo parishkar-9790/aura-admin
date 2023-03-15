@@ -23,9 +23,9 @@ import {
   PostEvents2,
   ListUsers,
   StatsPage,
-  AddTeams,
   DownloaderPage,
-  TeamSearch,
+  SearchTeams,
+  AddTeams,
 } from "./pages";
 import * as events from "./events.json";
 // import { Participant } from "pages/participant"
@@ -117,12 +117,8 @@ function App() {
                 list: ListUsers,
               },
               {
-                name: "teams",
+                name: "Teams",
                 list: AddTeams,
-              },
-              {
-                name: "Search",
-                list: TeamSearch,
               },
               {
                 name: "Stats",
@@ -131,6 +127,11 @@ function App() {
               {
                 name: "Download",
                 list: DownloaderPage,
+              },
+              {
+                // Not yet ready, uncomment while testing
+                name: "Search",
+                list: SearchTeams,
               },
             ]}
             Title={Title}
