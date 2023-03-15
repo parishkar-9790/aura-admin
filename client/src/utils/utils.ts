@@ -1,6 +1,7 @@
 import { ITeam, IUser, IEvent, IReceipt, ITeamExt } from "../interfaces/all";
 import coordinators from "../crd.json";
 import errors from "./error.codes.json";
+import { successToast, errorToast } from "./Toasts/Toasts";
 
 const HOST = "https://aura.git.edu";
 
@@ -17,8 +18,9 @@ export function sluggify(str: string | undefined) {
 // Create Team Error handler:
 const errorHandler = (err: any) => {
   console.log(err);
-  let err_status = err.response.status;
-  let err_code = err.response.data.error;
+  let err_status = parseInt(err.slice(0, 3));
+  let err_code = err;
+  console.log(err_status, err_code);
   if (err_status === 400) {
     if (err_code === errors[400].eventDetailsRequired) {
       return "Event Details Required!";
@@ -56,7 +58,7 @@ const errorHandler = (err: any) => {
   } else {
     return "Team Registration Failed!";
   }
-}
+};
 
 // Teams
 export async function getTeams(paginationTs: any) {
@@ -64,6 +66,45 @@ export async function getTeams(paginationTs: any) {
     const response = await fetch(
       `${HOST}/teams${paginationTs ? `?paginationTs=${paginationTs}` : ""}`
     );
+    const json = await response.json();
+
+    return {
+      paginationTs: json.data.paginationTs,
+      teams: json.data.results,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      paginationTs: null,
+      teams: [],
+    };
+  }
+}
+
+export async function getTeamsExtQuery({
+  eventId = null,
+  teamName = null,
+  teamMemberAuraId = null,
+  paymentStatus = null,
+  paginationTs = Date.now(),
+}) {
+  const queries = [
+    eventId !== null && `&eventId=${eventId}`,
+    teamName !== null && `&teamName=${teamName}`,
+    teamMemberAuraId !== null && `&teamMemberAuraId=${teamMemberAuraId}`,
+    paymentStatus !== null && `&paymentStatus=${!!paymentStatus}`,
+  ].filter((value) => value !== false && value !== null);
+
+  try {
+    const response = await fetch(
+      `${HOST}/teams?paginationTs=${paginationTs}${queries.join("")}`,
+    );
+    if (response.status !== 200)
+      return {
+        paginationTs: null,
+        teams: [],
+      };
+
     const json = await response.json();
 
     return {
@@ -100,9 +141,15 @@ export async function getTeamsByEvent(event_id: string, paginationTs: any) {
   }
 }
 
-export async function getCompleteTeamsByEvent(event_id: string, paginationTs: any) {
+export async function getCompleteTeamsByEvent(
+  event_id: string,
+  paginationTs: any
+) {
   try {
-    const response = await fetch(`${HOST}/teams/event/${event_id}/complete${paginationTs ? `?paginationTs=${paginationTs}` : ""}`);
+    const response = await fetch(
+      `${HOST}/teams/event/${event_id}/complete${paginationTs ? `?paginationTs=${paginationTs}` : ""
+      }`
+    );
     const json = await response.json();
 
     return {
@@ -110,13 +157,13 @@ export async function getCompleteTeamsByEvent(event_id: string, paginationTs: an
       teams: json.data.results as Array<ITeamExt>,
     };
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
     return {
       paginationTs: null,
       teams: [] as Array<ITeamExt>,
     };
   }
-};
+}
 
 export async function getTeam(team_id: string) {
   try {
@@ -230,15 +277,21 @@ export async function createTeam(data: any) {
     const response = await fetch(`${HOST}/teams/createteam/noauth`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
     const json = await response.json();
     if (!json.success) {
       console.error("Error code:", json.error);
-      return { status: false, message: json.error };
+      return errorHandler(json.error);
     }
+    console.log(json.data);
+    // const receipt = {
+    //   team_id: json.data.team._id,
+    //   transaction_id: data.transaction_id,
+    // };
+    // generateReceipt(receipt);
     return { status: true, message: json.message };
   } catch (error) {
     errorHandler(error);
@@ -378,14 +431,13 @@ export function checkAccess(email: string) {
 }
 
 export function getClubSlug() {
-  const userJson = localStorage.getItem('user');
+  const userJson = localStorage.getItem("user");
   if (userJson) {
     const userObj: IUser = JSON.parse(userJson);
-    const usn = (userObj.email?.split("@")[0]?.toLowerCase()?.trim() ?? "");
+    const usn = userObj.email?.split("@")[0]?.toLowerCase()?.trim() ?? "";
     const club = (coordinators as any)[usn]?.club;
 
-    if (club === "*")
-      return club;
+    if (club === "*") return club;
 
     const clubSlug = sluggify(club);
     return clubSlug;

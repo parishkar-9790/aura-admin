@@ -19,7 +19,13 @@ import { Title, Sider, Layout, Header } from "components/layout";
 import { Login } from "pages/login";
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { PostEvents2, ListUsers, StatsPage, AddTeams, DownloaderPage } from "./pages";
+import {
+  PostEvents2,
+  ListUsers,
+  StatsPage,
+  DownloaderPage,
+  SearchTeams,
+} from "./pages";
 import * as events from "./events.json";
 // import { Participant } from "pages/participant"
 const axiosInstance = axios.create();
@@ -88,7 +94,6 @@ function App() {
     },
   };
 
-
   return (
     <>
       {/*<GitHubBanner />*/}
@@ -118,10 +123,11 @@ function App() {
                 name: "Download",
                 list: DownloaderPage,
               },
-              { // Not yet ready, uncomment while testing
+              {
+                // Not yet ready, uncomment while testing
                 name: "teams",
-                list: AddTeams
-              }
+                list: SearchTeams,
+              },
             ]}
             Title={Title}
             Sider={Sider}
