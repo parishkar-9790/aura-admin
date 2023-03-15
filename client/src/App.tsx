@@ -118,10 +118,10 @@ function App() {
                 name: "Download",
                 list: DownloaderPage,
               },
-              // { // Not yet ready, uncomment while testing
-              //   name: "teams",
-              //   list:AddTeams
-              // }
+              { // Not yet ready, uncomment while testing
+                name: "teams",
+                list: AddTeams
+              }
             ]}
             Title={Title}
             Sider={Sider}
