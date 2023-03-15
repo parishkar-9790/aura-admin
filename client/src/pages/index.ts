@@ -4,12 +4,14 @@ import { ListUsers } from "./users";
 import { StatsPage } from "./stats";
 import { AddTeams } from "./add_teams";
 import { DownloaderPage } from "./downloader";
+import { TeamSearch } from "./teamSearch";
 
 export {
-    Login,
-    PostEvents2,
-    ListUsers,
-    StatsPage,
-    AddTeams,
-    DownloaderPage,
+  Login,
+  PostEvents2,
+  ListUsers,
+  StatsPage,
+  AddTeams,
+  DownloaderPage,
+  TeamSearch,
 };

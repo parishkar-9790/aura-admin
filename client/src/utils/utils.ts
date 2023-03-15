@@ -249,35 +249,38 @@ export async function createTeam(data: any) {
       return errorHandler(json.error);
     }
     console.log(json.data);
-    const receipt = {
-      team_id: json.data.team._id,
-      transaction_id: data.transaction_id,
-    };
-    generateReceipt(receipt);
     return { status: true, message: json.message };
   } catch (error) {
     errorHandler(error);
   }
 }
 
-const generateReceipt = async (data: any) => {
+export async function getTeamsByName({
+  name = null,
+  paginationTs = Date.now(),
+}) {
+  const queries = [name !== null && `&name=${name}`].filter(
+    (value) => value !== false && value !== null
+  );
+
   try {
-    console.log(data);
-    const response = await fetch(`${HOST}/receipts`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${HOST}/users/search?paginationTs=${paginationTs}${queries.join("")}`
+    );
     const json = await response.json();
-    if (!json.success) {
-      console.error("Error code:", json.error);
-      return errorToast("Error generating Payment Receipt");
-    }
-    return successToast("Payment Receipt Generated");
+
+    return {
+      paginationTs: json.data.paginationTs,
+      teams: json.data.results,
+    };
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error("Error fetching data:", error);
+    return {
+      paginationTs: null,
+      teams: [],
+    };
   }
-};
+}
 
 export async function getUsers({
   aura_id = null,
