@@ -266,6 +266,11 @@ export const SearchTeams: React.FC = () => {
 					title="Team #"
 					render={(id, _, index) => <span>{index + 1}</span>}
 				/>
+				{event === "all" && <Table.Column
+					dataIndex="event_participated"
+					title="Event"
+					render={(event_participated) => <span>{event_participated.event_title}</span>}
+				/>}
 				<Table.Column
 					dataIndex="team_name"
 					title="Team Name"
